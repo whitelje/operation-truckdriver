@@ -40,7 +40,7 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-    private final String DEFAULT_COMPANY_NAME = "ACME Corporation";
+    private final String DEFAULT_COMPANY_NAME = "PetsOvernight.com";
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        //TODO: Update company info based on values from initial activity
+        //TODO: Update company info based on values from initial activity (not created yet)
         mCompanyImageView = (ImageView) findViewById(R.id.company_logo);
         mCompanyNameView = (TextView) findViewById(R.id.company_name);
         mCompanyNameView.setText(String.format(getString(R.string.company_name), DEFAULT_COMPANY_NAME));

@@ -53,4 +53,9 @@
     <string name="model">Model</string>
     <string name="make">Make</string>
     <string name="odometer">Odometer</string>
+    <string name="end_trip">End Trip</string>
+    <string name="trip_distance">Trip Distance</string>
+    <string name="average_mpg">Average MPG</string>
+    <string name="current_mpg">Current MPG</string>
+    <string name="engine_rpm">Engine RPM</string>
 </resources>

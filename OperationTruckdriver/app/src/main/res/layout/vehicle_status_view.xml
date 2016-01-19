@@ -25,17 +25,17 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="@string/odometer"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="12000"
                 android:id="@+id/start_city"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
         </TableRow>
 
@@ -47,17 +47,17 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="@string/make"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="Volvo"
                 android:id="@+id/end_city"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
         </TableRow>
 
@@ -69,17 +69,17 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="@string/model"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="Max"
                 android:id="@+id/distance"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
         </TableRow>
 
@@ -91,17 +91,17 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="@string/vin"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="16AI8739102AD"
                 android:id="@+id/total_time"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
         </TableRow>
 
@@ -113,17 +113,17 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="@string/engine_make"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="Cummins"
                 android:id="@+id/stops"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
         </TableRow>
 
@@ -135,17 +135,17 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="@string/engine_model"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="354"
                 android:id="@+id/mpg"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
         </TableRow>
 
@@ -157,17 +157,17 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="@string/engine_hours"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="25 hr"
                 android:id="@+id/avg_speed"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
         </TableRow>
 
@@ -179,17 +179,17 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="@string/engine_temp"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="130 C"
                 android:id="@+id/driver_name"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
         </TableRow>
 
@@ -201,17 +201,17 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="@string/fuel_temp"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="74 F"
                 android:id="@+id/verified"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
         </TableRow>
 
@@ -223,17 +223,17 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="@string/oil_pressure"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="2.2 psi"
                 android:id="@+id/oil_pressure"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
         </TableRow>
 
@@ -245,13 +245,13 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="@string/trouble_codes"
-                android:textSize="@dimen/trip_review_text_size" />
+                android:textSize="@dimen/default_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp" />
+                android:layout_width="@dimen/vehicle_status_text_view_size" />
 
         </TableRow>
     </TableLayout>
@@ -272,8 +272,9 @@
         android:layout_height="wrap_content"
         android:text="@android:string/ok"
         android:id="@+id/ok_btn"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
         android:width="@dimen/vehicle_status_btn_size"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"

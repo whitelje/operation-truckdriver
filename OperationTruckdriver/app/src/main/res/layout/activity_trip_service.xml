@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/speedometer_placeholder"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/speedometer_placeholder"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/time_speedometer_placeholder"
+        android:layout_below="@+id/speedometer_placeholder"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/time_speedometer_placeholder"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/map_placeholder"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/map_placeholder"
+        android:layout_toRightOf="@+id/speedometer_placeholder"
+        android:layout_toEndOf="@+id/speedometer_placeholder"
+        android:layout_alignBottom="@+id/time_speedometer_placeholder" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="40dp"
+        android:paddingStart="40dp"
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"
+        android:gravity="center_horizontal"
+        android:id="@+id/tableLayout"
+        android:layout_below="@id/time_speedometer_placeholder">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/trip_service_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/trip_service_text_view_size"
+                android:text="@string/engine_rpm"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/trip_service_text_view_size"
+                android:text="1100"
+                android:id="@+id/start_city"
+                android:paddingLeft="@dimen/trip_service_text_left_pad"
+                android:textSize="@dimen/default_text_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/trip_service_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/trip_service_text_view_size"
+                android:text="@string/engine_temp"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/trip_service_text_view_size"
+                android:text="170 F"
+                android:id="@+id/end_city"
+                android:paddingLeft="@dimen/trip_service_text_left_pad"
+                android:textSize="@dimen/default_text_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/trip_service_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/trip_service_text_view_size"
+                android:text="@string/current_mpg"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/trip_service_text_view_size"
+                android:text="8"
+                android:id="@+id/distance"
+                android:paddingLeft="@dimen/trip_service_text_left_pad"
+                android:textSize="@dimen/default_text_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/trip_service_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/trip_service_text_view_size"
+                android:text="@string/average_mpg"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/trip_service_text_view_size"
+                android:text="12"
+                android:id="@+id/total_time"
+                android:paddingLeft="@dimen/trip_service_text_left_pad"
+                android:textSize="@dimen/default_text_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/trip_service_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/trip_service_text_view_size"
+                android:text="@string/oil_pressure"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/trip_service_text_view_size"
+                android:text="2.2 psi"
+                android:id="@+id/stops"
+                android:paddingLeft="@dimen/trip_service_text_left_pad"
+                android:textSize="@dimen/default_text_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/trip_service_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/trip_service_text_view_size"
+                android:text="@string/trip_distance"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/trip_service_text_view_size"
+                android:text="34 mi"
+                android:id="@+id/mpg"
+                android:paddingLeft="@dimen/trip_service_text_left_pad"
+                android:textSize="@dimen/default_text_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/trip_service_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/trip_service_text_view_size"
+                android:text="@string/odometer"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/trip_service_text_view_size"
+                android:text="12243 mi"
+                android:id="@+id/avg_speed"
+                android:paddingLeft="@dimen/trip_service_text_left_pad"
+                android:textSize="@dimen/default_text_size" />
+
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/end_trip"
+        android:id="@+id/end_btn"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:width="@dimen/trip_service_btn_size"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
