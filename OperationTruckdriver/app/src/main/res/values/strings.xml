@@ -16,8 +16,6 @@
     <string name="login_logo_placeholder">CompanyLogo</string>
     <string name="company_name">Company: %1$s</string>
     <string name="today_stats">Today\'s Stats:</string>
-
-
     <string name="scanning">scanning for devices…</string>
     <string name="select_device">select a device to connect</string>
     <string name="none_paired">No devices have been paired</string>
@@ -26,4 +24,22 @@
     <string name="title_other_devices">Other Available Devices</string>
     <string name="button_scan">Scan for devices</string>
     <string name="pairTip"><![CDATA[Pair with devices in Settings > Bluetooth]]></string>
+    <string name="miles">Miles</string>
+    <string name="hours">Hours</string>
+    <string name="start_trip">Start Trip</string>
+    <string name="trip_review">Trip Review</string>
+    <string name="vehicle">Vehicle</string>
+    <string name="logout">Logout</string>
+    <string name="start_city">Start City</string>
+    <string name="end_city">End City</string>
+    <string name="distance">Distance</string>
+    <string name="total_time">Total Time</string>
+    <string name="stops">Stops</string>
+    <string name="mpg">MPG</string>
+    <string name="avg_speed">Avg Speed</string>
+    <string name="driver">Driver</string>
+    <string name="verified">Verified</string>
+    <string name="notate">Notate</string>
+    <string name="details">Details</string>
+    <string name="verify">Verify</string>
 </resources>
