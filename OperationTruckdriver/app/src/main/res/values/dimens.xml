@@ -5,4 +5,5 @@
     <dimen name="main_activity_text_size">25sp</dimen>
     <dimen name="main_activity_button_text">20sp</dimen>
     <dimen name="main_activity_button_size">175dp</dimen>
+    <dimen name="trip_review_text_size">18sp</dimen>
 </resources>

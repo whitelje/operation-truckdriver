@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/today_miles_label"
         android:textSize="@dimen/main_activity_text_size"
-        android:text="Miles"
+        android:text="@string/miles"
         android:layout_below="@+id/today_stats_view"
         android:layout_alignLeft="@+id/today_stats_view"
         android:layout_alignStart="@+id/today_stats_view"
@@ -54,14 +54,15 @@
         android:textSize="@dimen/main_activity_text_size"
         android:text="1500 mi"
         android:layout_below="@+id/today_stats_view"
-        android:layout_toRightOf="@+id/today_miles_label" />
+        android:layout_toRightOf="@+id/today_miles_label"
+        android:layout_toEndOf="@id/today_miles_label"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/today_hours_label"
         android:textSize="@dimen/main_activity_text_size"
-        android:text="Hours"
+        android:text="@string/hours"
         android:layout_below="@+id/today_miles_label"
         android:layout_alignLeft="@+id/today_miles_label"
         android:layout_alignStart="@+id/today_miles_label" />
@@ -79,7 +80,7 @@
     <Button
         android:layout_width="@dimen/main_activity_button_size"
         android:layout_height="wrap_content"
-        android:text="Start Trip"
+        android:text="@string/start_trip"
         android:id="@+id/start_trip_button"
         android:textSize="@dimen/main_activity_button_text"
         android:layout_marginTop="47dp"
@@ -90,7 +91,7 @@
     <Button
         android:layout_width="@dimen/main_activity_button_size"
         android:layout_height="wrap_content"
-        android:text="Trip Review"
+        android:text="@string/trip_review"
         android:id="@+id/trip_review_button"
         android:textSize="@dimen/main_activity_button_text"
         android:layout_centerHorizontal="true"
@@ -99,7 +100,7 @@
     <Button
         android:layout_width="@dimen/main_activity_button_size"
         android:layout_height="wrap_content"
-        android:text="Vehicle"
+        android:text="@string/vehicle"
         android:id="@+id/vehicle_button"
         android:textSize="@dimen/main_activity_button_text"
         android:layout_centerHorizontal="true"
@@ -108,7 +109,7 @@
     <Button
         android:layout_width="@dimen/main_activity_button_size"
         android:layout_height="wrap_content"
-        android:text="Logout"
+        android:text="@string/logout"
         android:id="@+id/logout_button"
         android:textSize="@dimen/main_activity_button_text"
         android:layout_centerHorizontal="true"
