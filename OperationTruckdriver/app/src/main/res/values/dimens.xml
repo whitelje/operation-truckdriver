@@ -3,7 +3,13 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="main_activity_text_size">25sp</dimen>
-    <dimen name="main_activity_button_text">20sp</dimen>
-    <dimen name="main_activity_button_size">175dp</dimen>
+    <dimen name="main_activity_btn_text_size">20sp</dimen>
+    <dimen name="main_activity_btn_size">175dp</dimen>
     <dimen name="trip_review_text_size">18sp</dimen>
+    <dimen name="trip_review_text_view_size">150dp</dimen>
+    <dimen name="trip_review_text_left_pad">18dp</dimen>
+    <dimen name="trip_review_btn_horiz_margin">15dp</dimen>
+    <dimen name="vehicle_status_row_spacing">3dp</dimen>
+    <dimen name="vehicle_status_text_left_pad">18dp</dimen>
+    <dimen name="vehicle_status_btn_size">150dp</dimen>
 </resources>

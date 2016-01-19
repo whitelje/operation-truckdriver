@@ -78,40 +78,40 @@
         android:layout_alignEnd="@+id/today_total_miles" />
 
     <Button
-        android:layout_width="@dimen/main_activity_button_size"
+        android:layout_width="@dimen/main_activity_btn_size"
         android:layout_height="wrap_content"
         android:text="@string/start_trip"
         android:id="@+id/start_trip_button"
-        android:textSize="@dimen/main_activity_button_text"
+        android:textSize="@dimen/main_activity_btn_text_size"
         android:layout_marginTop="47dp"
         android:layout_below="@+id/today_hours_label"
         android:layout_alignLeft="@+id/trip_review_button"
         android:layout_alignStart="@+id/trip_review_button" />
 
     <Button
-        android:layout_width="@dimen/main_activity_button_size"
+        android:layout_width="@dimen/main_activity_btn_size"
         android:layout_height="wrap_content"
         android:text="@string/trip_review"
         android:id="@+id/trip_review_button"
-        android:textSize="@dimen/main_activity_button_text"
+        android:textSize="@dimen/main_activity_btn_text_size"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/start_trip_button" />
 
     <Button
-        android:layout_width="@dimen/main_activity_button_size"
+        android:layout_width="@dimen/main_activity_btn_size"
         android:layout_height="wrap_content"
         android:text="@string/vehicle"
         android:id="@+id/vehicle_button"
-        android:textSize="@dimen/main_activity_button_text"
+        android:textSize="@dimen/main_activity_btn_text_size"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/trip_review_button" />
 
     <Button
-        android:layout_width="@dimen/main_activity_button_size"
+        android:layout_width="@dimen/main_activity_btn_size"
         android:layout_height="wrap_content"
         android:text="@string/logout"
         android:id="@+id/logout_button"
-        android:textSize="@dimen/main_activity_button_text"
+        android:textSize="@dimen/main_activity_btn_text_size"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/vehicle_button" />
 

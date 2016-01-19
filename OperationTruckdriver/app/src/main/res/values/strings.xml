@@ -42,4 +42,15 @@
     <string name="notate">Notate</string>
     <string name="details">Details</string>
     <string name="verify">Verify</string>
+    <string name="trouble_codes">Trouble Codes:</string>
+    <string name="oil_pressure">Oil Pressure</string>
+    <string name="fuel_temp">Fuel Temp</string>
+    <string name="engine_temp">Engine Temp</string>
+    <string name="engine_hours">Engine Hours</string>
+    <string name="engine_model">Engine Model</string>
+    <string name="engine_make">Engine Make</string>
+    <string name="vin">VIN</string>
+    <string name="model">Model</string>
+    <string name="make">Make</string>
+    <string name="odometer">Odometer</string>
 </resources>

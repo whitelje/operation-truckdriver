@@ -30,16 +30,16 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="@string/start_city"
                 android:textSize="@dimen/trip_review_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="Chicago, IL"
                 android:id="@+id/start_city"
-                android:paddingLeft="18dp"
+                android:paddingLeft="@dimen/trip_review_text_left_pad"
                 android:textSize="@dimen/trip_review_text_size" />
 
         </TableRow>
@@ -51,16 +51,16 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="@string/end_city"
                 android:textSize="@dimen/trip_review_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="Indianapolis, IN"
                 android:id="@+id/end_city"
-                android:paddingLeft="18dp"
+                android:paddingLeft="@dimen/trip_review_text_left_pad"
                 android:textSize="@dimen/trip_review_text_size" />
 
         </TableRow>
@@ -72,16 +72,16 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="@string/distance"
                 android:textSize="@dimen/trip_review_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="160 mi"
                 android:id="@+id/distance"
-                android:paddingLeft="18dp"
+                android:paddingLeft="@dimen/trip_review_text_left_pad"
                 android:textSize="@dimen/trip_review_text_size" />
 
         </TableRow>
@@ -93,16 +93,16 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="@string/total_time"
                 android:textSize="@dimen/trip_review_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="2:40.00"
                 android:id="@+id/total_time"
-                android:paddingLeft="18dp"
+                android:paddingLeft="@dimen/trip_review_text_left_pad"
                 android:textSize="@dimen/trip_review_text_size" />
 
         </TableRow>
@@ -114,16 +114,16 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="@string/stops"
                 android:textSize="@dimen/trip_review_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="1"
                 android:id="@+id/stops"
-                android:paddingLeft="18dp"
+                android:paddingLeft="@dimen/trip_review_text_left_pad"
                 android:textSize="@dimen/trip_review_text_size" />
 
         </TableRow>
@@ -135,16 +135,16 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="@string/mpg"
                 android:textSize="@dimen/trip_review_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="3.5"
                 android:id="@+id/mpg"
-                android:paddingLeft="18dp"
+                android:paddingLeft="@dimen/trip_review_text_left_pad"
                 android:textSize="@dimen/trip_review_text_size" />
 
         </TableRow>
@@ -156,16 +156,16 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="@string/avg_speed"
                 android:textSize="@dimen/trip_review_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="57 mph"
                 android:id="@+id/avg_speed"
-                android:paddingLeft="18dp"
+                android:paddingLeft="@dimen/trip_review_text_left_pad"
                 android:textSize="@dimen/trip_review_text_size" />
 
         </TableRow>
@@ -177,16 +177,16 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="@string/driver"
                 android:textSize="@dimen/trip_review_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="Payden Beyer"
                 android:id="@+id/driver_name"
-                android:paddingLeft="18dp"
+                android:paddingLeft="@dimen/trip_review_text_left_pad"
                 android:textSize="@dimen/trip_review_text_size" />
 
         </TableRow>
@@ -198,61 +198,63 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="@string/verified"
                 android:textSize="@dimen/trip_review_text_size" />
 
             <TextView
                 android:layout_height="wrap_content"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="No"
                 android:id="@+id/verified"
-                android:paddingLeft="18dp"
+                android:paddingLeft="@dimen/trip_review_text_left_pad"
                 android:textSize="@dimen/trip_review_text_size" />
 
         </TableRow>
     </TableLayout>
 
     <Button
-        android:layout_width="@dimen/main_activity_button_size"
+        android:layout_width="@dimen/main_activity_btn_size"
         android:layout_height="wrap_content"
         android:text="@string/notate"
         android:textSize="@dimen/trip_review_text_size"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="@dimen/trip_review_btn_horiz_margin"
+        android:layout_marginStart="@dimen/trip_review_btn_horiz_margin"
         android:layout_below="@+id/tableLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/button2" />
+        android:id="@+id/notate_btn" />
 
     <Button
-        android:layout_width="@dimen/main_activity_button_size"
+        android:layout_width="@dimen/main_activity_btn_size"
         android:layout_height="wrap_content"
         android:text="@string/details"
         android:textSize="@dimen/trip_review_text_size"
-        android:id="@+id/button"
-        android:layout_marginRight="15dp"
+        android:id="@+id/details_btn"
+        android:layout_marginRight="@dimen/trip_review_btn_horiz_margin"
+        android:layout_marginEnd="@dimen/trip_review_btn_horiz_margin"
         android:layout_below="@+id/tableLayout"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:layout_width="@dimen/main_activity_button_size"
+        android:layout_width="@dimen/main_activity_btn_size"
         android:layout_height="wrap_content"
         android:text="@android:string/cancel"
         android:textSize="@dimen/trip_review_text_size"
-        android:id="@+id/button3"
-        android:layout_below="@+id/button2"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_alignStart="@+id/button2" />
+        android:id="@+id/cancel_btn"
+        android:layout_below="@+id/notate_btn"
+        android:layout_alignLeft="@+id/notate_btn"
+        android:layout_alignStart="@+id/notate_btn" />
 
     <Button
-        android:layout_width="@dimen/main_activity_button_size"
+        android:layout_width="@dimen/main_activity_btn_size"
         android:layout_height="wrap_content"
         android:text="@string/verify"
         android:textSize="@dimen/trip_review_text_size"
-        android:id="@+id/button4"
-        android:layout_below="@+id/button"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button" />
+        android:id="@+id/verify_btn"
+        android:layout_below="@+id/details_btn"
+        android:layout_alignLeft="@+id/details_btn"
+        android:layout_alignStart="@+id/details_btn" />
 
 </RelativeLayout>
