@@ -3,6 +3,7 @@ package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.FragmentTransaction;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -29,6 +30,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.MapFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,11 +69,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     private TextView mCompanyNameView;
     private ImageView mCompanyImageView;
+//    private MapFragment mf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+//        setContentView(R.layout.trip_review_view);
+//        mf = MapFragment.newInstance();
+//        FragmentTransaction fragmentTransaction =
+//                getFragmentManager().beginTransaction();
+//        fragmentTransaction.add(R.id.map_fragment_container, mf);
+//        fragmentTransaction.commit();
+//        return;
         // Set up the login form.
         //TODO: Update company info based on values from initial activity (not created yet)
         mCompanyImageView = (ImageView) findViewById(R.id.company_logo);
