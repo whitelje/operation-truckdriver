@@ -17,4 +17,5 @@
     <dimen name="trip_service_text_left_pad">18dp</dimen>
     <dimen name="trip_service_text_view_size">150dp</dimen>
     <dimen name="trip_service_btn_size">150dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
