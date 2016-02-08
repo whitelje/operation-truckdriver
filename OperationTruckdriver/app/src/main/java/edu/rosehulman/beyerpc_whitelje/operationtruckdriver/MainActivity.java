@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 1;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +71,12 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, DeviceListActivity.class);
             startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
         }
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.container, new MainActivityFragment());
+        ft.commit();
+//        ft.replace(R.id.container, new TripFragment());
+//        ft.commit();
     }
 
     private void setStatus(int resId) {
@@ -91,6 +100,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     private final Handler mHandler = new MyHandler(this);
+
+    public void start_listener(View view) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.container, new TripFragment());
+        ft.commit();
+    }
 
     class MyHandler extends Handler {
 

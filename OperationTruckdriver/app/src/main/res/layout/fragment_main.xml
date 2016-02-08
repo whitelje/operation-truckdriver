@@ -1,13 +1,119 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="edu.rosehulman.beyerpc_whitelje.operationtruckdriver.MainActivityFragment"
-    tools:showIn="@layout/activity_main2">
 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/driver_name"
+        android:textSize="@dimen/main_activity_text_size"
+        android:text="Driver: Payden Beyer"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="47dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vehicle_name"
+        android:textSize="@dimen/main_activity_text_size"
+        android:paddingBottom="25dp"
+        android:text="Vehicle: Ol' Blue (12)"
+        android:layout_below="@+id/driver_name"
+        android:layout_alignLeft="@+id/driver_name"
+        android:layout_alignStart="@+id/driver_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/today_stats_view"
+        android:textSize="@dimen/main_activity_text_size"
+        android:text="@string/today_stats"
+        android:layout_below="@+id/vehicle_name"
+        android:layout_alignLeft="@+id/vehicle_name"
+        android:layout_alignStart="@+id/vehicle_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/today_miles_label"
+        android:textSize="@dimen/main_activity_text_size"
+        android:text="@string/miles"
+        android:layout_below="@+id/today_stats_view"
+        android:layout_alignLeft="@+id/today_stats_view"
+        android:layout_alignStart="@+id/today_stats_view"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:paddingRight="50dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/today_total_miles"
+        android:textSize="@dimen/main_activity_text_size"
+        android:text="1500 mi"
+        android:layout_below="@+id/today_stats_view"
+        android:layout_toRightOf="@+id/today_miles_label"
+        android:layout_toEndOf="@id/today_miles_label"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/today_hours_label"
+        android:textSize="@dimen/main_activity_text_size"
+        android:text="@string/hours"
+        android:layout_below="@+id/today_miles_label"
+        android:layout_alignLeft="@+id/today_miles_label"
+        android:layout_alignStart="@+id/today_miles_label" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/today_total_hours"
+        android:textSize="@dimen/main_activity_text_size"
+        android:text="10 hr"
+        android:layout_below="@+id/today_total_miles"
+        android:layout_alignRight="@+id/today_total_miles"
+        android:layout_alignEnd="@+id/today_total_miles" />
+
+    <Button
+        android:layout_width="@dimen/main_activity_btn_size"
+        android:layout_height="wrap_content"
+        android:text="@string/start_trip"
+        android:id="@+id/start_trip_button"
+        android:textSize="@dimen/main_activity_btn_text_size"
+        android:layout_marginTop="47dp"
+        android:layout_below="@+id/today_hours_label"
+        android:layout_alignLeft="@+id/trip_review_button"
+        android:layout_alignStart="@+id/trip_review_button"
+        android:onClick="start_listener" />
+
+    <Button
+        android:layout_width="@dimen/main_activity_btn_size"
+        android:layout_height="wrap_content"
+        android:text="@string/trip_review"
+        android:id="@+id/trip_review_button"
+        android:textSize="@dimen/main_activity_btn_text_size"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/start_trip_button" />
+
+    <Button
+        android:layout_width="@dimen/main_activity_btn_size"
+        android:layout_height="wrap_content"
+        android:text="@string/vehicle"
+        android:id="@+id/vehicle_button"
+        android:textSize="@dimen/main_activity_btn_text_size"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/trip_review_button" />
+
+    <Button
+        android:layout_width="@dimen/main_activity_btn_size"
+        android:layout_height="wrap_content"
+        android:text="@string/logout"
+        android:id="@+id/logout_button"
+        android:textSize="@dimen/main_activity_btn_text_size"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/vehicle_button" />
 
 </RelativeLayout>
