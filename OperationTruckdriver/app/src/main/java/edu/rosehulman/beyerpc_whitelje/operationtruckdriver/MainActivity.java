@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     BluetoothService mBluetoothService;
     private String mConnectedDeviceName;
     private VnaMessageHandler mVnaMessageHandler;
+    private boolean blah = false;
+    private boolean logged_in = false;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -37,6 +39,14 @@ public class MainActivity extends AppCompatActivity {
                     mBluetoothService.connectDevice(address);
                 }
                 break;
+            case LoginActivity.REQUEST_LOGIN:
+                logged_in = true;
+                if(mBluetoothService != null &&
+                        mBluetoothService.getState() == BluetoothService.STATE_NONE) {
+                    Intent intent = new Intent(this, DeviceListActivity.class);
+                    startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
+                }
+                break;
         }
     }
 
@@ -51,8 +61,13 @@ public class MainActivity extends AppCompatActivity {
         mBluetoothService = new BluetoothService(this, mHandler);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        Intent intent = new Intent(this, DeviceListActivity.class);
-        startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
+        if(!logged_in) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivityForResult(intent, LoginActivity.REQUEST_LOGIN);
+        } else {
+            Intent intent = new Intent(this, DeviceListActivity.class);
+            startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
+        }
     }
 
     private void setStatus(int resId) {
@@ -125,6 +140,24 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(mActivity, msg.getData().getString(Constants.TOAST),
                                 Toast.LENGTH_SHORT).show();
                     }
+                    break;
+                case Constants.MESSAGE_STATS_OBD:
+                    if(!blah) {
+                        byte[] buf = new byte[7];
+                        buf[0] = (byte) 0xC0;
+                        buf[1] = (byte) 0;
+                        buf[2] = 4;
+                        buf[3] = 0x40;
+                        buf[4] = (byte) 0;
+                        buf[5] = 0x0C;
+                        buf[6] = 0x74;
+                        mBluetoothService.write(buf);
+                        blah = true;
+                    }
+                    break;
+                case Constants.MESSAGE_RX_OBD:
+                    // write to firebase
+                    // write to trip view
                     break;
             }
         }
