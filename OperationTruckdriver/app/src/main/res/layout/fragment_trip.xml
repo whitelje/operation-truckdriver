@@ -26,17 +26,29 @@
             android:layout_alignParentStart="true"
             android:src="@drawable/time_speedometer_placeholder"/>
 
-        <ImageView
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/trip_map_container"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:src="@drawable/map_placeholder"-->
+            <!--android:layout_toRightOf="@+id/speedometer_placeholder"-->
+            <!--android:layout_toEndOf="@+id/speedometer_placeholder"-->
+            <!--android:layout_alignBottom="@+id/time_speedometer_placeholder" />-->
+
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/map_placeholder"
+            android:id="@+id/trip_map_container"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/map_placeholder"
-            android:layout_toRightOf="@+id/speedometer_placeholder"
-            android:layout_toEndOf="@+id/speedometer_placeholder"
-            android:layout_alignBottom="@+id/time_speedometer_placeholder" />
+            android:layout_toRightOf="@id/speedometer_placeholder"
+            android:layout_toEndOf="@id/speedometer_placeholder"
+            android:layout_alignBottom="@id/time_speedometer_placeholder"
+            />
 
         <TableLayout
             android:layout_width="match_parent"

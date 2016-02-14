@@ -1,19 +1,37 @@
 package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 
+import android.Manifest;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends AppCompatActivity {
     BluetoothService mBluetoothService;
@@ -23,19 +41,16 @@ public class MainActivity extends AppCompatActivity {
     private boolean logged_in = false;
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if(resultCode == Activity.RESULT_CANCELED) {
-            if(mBluetoothService != null) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_CANCELED) {
+            if (mBluetoothService != null) {
                 mBluetoothService.start();
             }
         }
-        switch (requestCode)
-        {
+        switch (requestCode) {
             case REQUEST_CONNECT_DEVICE_INSECURE:
                 // When DeviceListActivity returns with a bluetoothDevice to connect
-                if (resultCode == Activity.RESULT_OK)
-                {
+                if (resultCode == Activity.RESULT_OK) {
                     final String address = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
                     mBluetoothService.connectDevice(address);
                 }
@@ -55,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 1;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         mBluetoothService = new BluetoothService(this, mHandler);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        if(!logged_in) {
+        if (!logged_in) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivityForResult(intent, LoginActivity.REQUEST_LOGIN);
         } else {
@@ -102,9 +116,55 @@ public class MainActivity extends AppCompatActivity {
     private final Handler mHandler = new MyHandler(this);
 
     public void start_listener(View view) {
+//        Location loc = getMyLocation();
+//        final LatLng pos = new LatLng(loc.getLatitude(), loc.getLongitude());
+//        CameraPosition camera = new CameraPosition(pos, 15, 0, 0);
+//
+//        GoogleMapOptions options = new GoogleMapOptions();
+//        options.liteMode(true);
+//        options.camera(camera);
+//        SupportMapFragment map = SupportMapFragment.newInstance(options);
+//        map.getMapAsync(new OnMapReadyCallback() {
+//            @Override
+//            public void onMapReady(GoogleMap googleMap) {
+//                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+//                        && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                    //Do Nothing
+//                } else {
+//                    googleMap.setMyLocationEnabled(true);
+//                    googleMap.getUiSettings().setMapToolbarEnabled(false);
+//                }
+//            }
+//        });
+
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//        ft.replace(R.id.trip_map_container, map, "tripMap");
         ft.replace(R.id.container, new TripFragment());
         ft.commit();
+    }
+
+    private Location getMyLocation() {
+        // Get location from GPS if it's available
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            //do nothing
+        }
+        Location myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        // Location wasn't found, check the next most accurate place for the current location
+        if (myLocation == null) {
+            Criteria criteria = new Criteria();
+            criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+            // Finds a provider that matches the criteria
+            String provider = lm.getBestProvider(criteria, true);
+            // Use the provider to get the last known location
+            myLocation = lm.getLastKnownLocation(provider);
+        }
+
+        return myLocation;
     }
 
     class MyHandler extends Handler {

@@ -1,12 +1,29 @@
 package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 
 
 /**
@@ -26,6 +43,7 @@ public class TripFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private SupportMapFragment mMap;
 
     private OnFragmentInteractionListener mListener;
 
@@ -60,10 +78,61 @@ public class TripFragment extends Fragment {
         }
     }
 
+    private Location getMyLocation() {
+        // Get location from GPS if it's available
+        LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            //do nothing
+        }
+        Location myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        // Location wasn't found, check the next most accurate place for the current location
+        if (myLocation == null) {
+            Criteria criteria = new Criteria();
+            criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+            // Finds a provider that matches the criteria
+            String provider = lm.getBestProvider(criteria, true);
+            // Use the provider to get the last known location
+            myLocation = lm.getLastKnownLocation(provider);
+        }
+
+        return myLocation;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        Location loc = getMyLocation();
+        final LatLng pos = new LatLng(loc.getLatitude(), loc.getLongitude());
+        CameraPosition camera = new CameraPosition(pos, 15, 0, 0);
+
+        GoogleMapOptions options = new GoogleMapOptions();
+        options.liteMode(true);
+        options.camera(camera);
+        mMap = SupportMapFragment.newInstance(options);
+        mMap.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    //Do Nothing
+                } else {
+                    googleMap.setMyLocationEnabled(true);
+                    googleMap.getUiSettings().setMapToolbarEnabled(false);
+                }
+            }
+        });
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.trip_map_container, mMap, "tripMap");
+        ft.commit();
+
+
         return inflater.inflate(R.layout.fragment_trip, container, false);
     }
 
