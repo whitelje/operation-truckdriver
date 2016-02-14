@@ -43,6 +43,7 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
+    public static final int REQUEST_LOGIN = 2;
     private final String DEFAULT_COMPANY_NAME = "PetsOvernight.com";
 
     /**
