@@ -42,11 +42,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case LoginActivity.REQUEST_LOGIN:
                 logged_in = true;
-                if(mBluetoothService != null &&
-                        mBluetoothService.getState() == BluetoothService.STATE_NONE) {
-                    Intent intent = new Intent(this, DeviceListActivity.class);
-                    startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
-                }
+//                if(mBluetoothService != null &&
+//                        mBluetoothService.getState() == BluetoothService.STATE_NONE) {
+//                    Intent intent = new Intent(this, DeviceListActivity.class);
+//                    startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
+//                }
                 break;
         }
     }
@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivityForResult(intent, LoginActivity.REQUEST_LOGIN);
         } else {
-            Intent intent = new Intent(this, DeviceListActivity.class);
-            startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
+//            Intent intent = new Intent(this, DeviceListActivity.class);
+//            startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
         }
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
