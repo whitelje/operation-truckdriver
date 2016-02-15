@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.container, new MainActivityFragment());
+        ft.replace(R.id.container, new MainActivityFragment());
         ft.commit();
 //        ft.replace(R.id.container, new TripFragment());
 //        ft.commit();
@@ -116,55 +116,9 @@ public class MainActivity extends AppCompatActivity {
     private final Handler mHandler = new MyHandler(this);
 
     public void start_listener(View view) {
-//        Location loc = getMyLocation();
-//        final LatLng pos = new LatLng(loc.getLatitude(), loc.getLongitude());
-//        CameraPosition camera = new CameraPosition(pos, 15, 0, 0);
-//
-//        GoogleMapOptions options = new GoogleMapOptions();
-//        options.liteMode(true);
-//        options.camera(camera);
-//        SupportMapFragment map = SupportMapFragment.newInstance(options);
-//        map.getMapAsync(new OnMapReadyCallback() {
-//            @Override
-//            public void onMapReady(GoogleMap googleMap) {
-//                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-//                        && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                    //Do Nothing
-//                } else {
-//                    googleMap.setMyLocationEnabled(true);
-//                    googleMap.getUiSettings().setMapToolbarEnabled(false);
-//                }
-//            }
-//        });
-
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//        ft.replace(R.id.trip_map_container, map, "tripMap");
         ft.replace(R.id.container, new TripFragment());
         ft.commit();
-    }
-
-    private Location getMyLocation() {
-        // Get location from GPS if it's available
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            //do nothing
-        }
-        Location myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-        // Location wasn't found, check the next most accurate place for the current location
-        if (myLocation == null) {
-            Criteria criteria = new Criteria();
-            criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-            // Finds a provider that matches the criteria
-            String provider = lm.getBestProvider(criteria, true);
-            // Use the provider to get the last known location
-            myLocation = lm.getLastKnownLocation(provider);
-        }
-
-        return myLocation;
     }
 
     class MyHandler extends Handler {
