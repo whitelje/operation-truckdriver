@@ -7,17 +7,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TripFragment.OnFragmentInteractionListener} interface
+ * {@link VehicleFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TripFragment#newInstance} factory method to
+ * Use the {@link VehicleFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
  */
-public class TripFragment extends Fragment {
+public class VehicleFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,24 +31,23 @@ public class TripFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public TripFragment() {
-        // Required empty public constructor
-    }
-
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TripFragment.
+     * @return A new instance of fragment VehicleFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TripFragment newInstance() {
-        TripFragment fragment = new TripFragment();
+    public static VehicleFragment newInstance() {
+        VehicleFragment fragment = new VehicleFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+    public VehicleFragment() {
+        // Required empty public constructor
     }
 
     @Override
@@ -62,19 +63,33 @@ public class TripFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_trip, container, false);
+        View view = inflater.inflate(R.layout.fragment_vehicle, container, false);
+        Button okay = (Button) view.findViewById(R.id.ok_btn);
+        okay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed();
+            }
+        });
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed() {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onCloseVehicleFragmentClicked();
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
     @Override
@@ -95,6 +110,6 @@ public class TripFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onCloseVehicleFragmentClicked();
     }
 }

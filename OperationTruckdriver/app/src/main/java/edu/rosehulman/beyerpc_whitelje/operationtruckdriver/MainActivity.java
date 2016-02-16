@@ -3,19 +3,22 @@ package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+    implements TripReviewFragment.OnFragmentInteractionListener,
+                VehicleFragment.OnFragmentInteractionListener,
+        ReviewFragment.OnListFragmentInteractionListener
+
+{
     BluetoothService mBluetoothService;
     private String mConnectedDeviceName;
     private VnaMessageHandler mVnaMessageHandler;
@@ -73,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.container, new MainActivityFragment());
+        ft.replace(R.id.container, new MainActivityFragment());
         ft.commit();
 //        ft.replace(R.id.container, new TripFragment());
 //        ft.commit();
@@ -103,7 +106,48 @@ public class MainActivity extends AppCompatActivity {
 
     public void start_listener(View view) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, new TripFragment());
+        ft.replace(R.id.container, TripFragment.newInstance());
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    public void review_listener(View view) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.container, ReviewFragment.newInstance(1));
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    public void vehicle_listener(View view) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.container, VehicleFragment.newInstance());
+        ft.addToBackStack("main");
+        ft.commit();
+    }
+
+    // TripReviewFragment.OnInteractionListener
+    @Override
+    public void onCancelButtonClicked() {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.container, ReviewFragment.newInstance(1));
+        ft.commit();
+        fm.popBackStack();
+    }
+
+    @Override
+    public void onListFragmentInteraction(ReviewItem item) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.container, TripReviewFragment.newInstance(item));
+        ft.addToBackStack("review");
+        ft.commit();
+
+    }
+
+    @Override
+    public void onCloseVehicleFragmentClicked() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.container, MainActivityFragment.newInstance());
         ft.commit();
     }
 

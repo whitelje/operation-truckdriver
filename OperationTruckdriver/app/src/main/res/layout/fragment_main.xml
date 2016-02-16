@@ -96,7 +96,8 @@
         android:id="@+id/trip_review_button"
         android:textSize="@dimen/main_activity_btn_text_size"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/start_trip_button" />
+        android:layout_below="@+id/start_trip_button"
+        android:onClick="review_listener" />
 
     <Button
         android:layout_width="@dimen/main_activity_btn_size"
@@ -105,7 +106,8 @@
         android:id="@+id/vehicle_button"
         android:textSize="@dimen/main_activity_btn_text_size"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/trip_review_button" />
+        android:layout_below="@+id/trip_review_button"
+        android:onClick="vehicle_listener"/>
 
     <Button
         android:layout_width="@dimen/main_activity_btn_size"

@@ -1,23 +1,23 @@
 package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TripFragment.OnFragmentInteractionListener} interface
+ * {@link TripReviewFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TripFragment#newInstance} factory method to
+ * Use the {@link TripReviewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TripFragment extends Fragment {
+public class TripReviewFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,7 +29,7 @@ public class TripFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public TripFragment() {
+    public TripReviewFragment() {
         // Required empty public constructor
     }
 
@@ -39,12 +39,14 @@ public class TripFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TripFragment.
+     * @param item
+     * @return A new instance of fragment TripReviewFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TripFragment newInstance() {
-        TripFragment fragment = new TripFragment();
+    public static TripReviewFragment newInstance(ReviewItem item) {
+        TripReviewFragment fragment = new TripReviewFragment();
         Bundle args = new Bundle();
+        args.putParcelable("ReviewItem", item);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,19 +64,32 @@ public class TripFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_trip, container, false);
+        View view = inflater.inflate(R.layout.fragment_trip_review, container, false);
+        Button btn = (Button) view.findViewById(R.id.cancel_btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCancelButtonClicked();
+            }
+        });
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onCancelButtonClicked() {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onCancelButtonClicked();
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
     @Override
@@ -88,13 +103,13 @@ public class TripFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p>
+     * <p/>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onCancelButtonClicked();
     }
 }

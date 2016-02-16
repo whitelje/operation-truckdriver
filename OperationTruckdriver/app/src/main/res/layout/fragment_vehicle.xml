@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="20dp"
+        android:paddingStart="20dp"
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"
+        android:gravity="center_horizontal"
+        android:id="@+id/tableLayout">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/vehicle_status_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="@string/odometer"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="12000"
+                android:id="@+id/start_city"
+                android:paddingLeft="@dimen/vehicle_status_text_left_pad"
+                android:textSize="@dimen/default_text_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/vehicle_status_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="@string/make"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="Volvo"
+                android:id="@+id/end_city"
+                android:paddingLeft="@dimen/vehicle_status_text_left_pad"
+                android:textSize="@dimen/default_text_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/vehicle_status_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="@string/model"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="Max"
+                android:id="@+id/distance"
+                android:paddingLeft="@dimen/vehicle_status_text_left_pad"
+                android:textSize="@dimen/default_text_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/vehicle_status_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="@string/vin"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="16AI8739102AD"
+                android:id="@+id/total_time"
+                android:paddingLeft="@dimen/vehicle_status_text_left_pad"
+                android:textSize="@dimen/default_text_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/vehicle_status_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="@string/engine_make"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="Cummins"
+                android:id="@+id/stops"
+                android:paddingLeft="@dimen/vehicle_status_text_left_pad"
+                android:textSize="@dimen/default_text_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/vehicle_status_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="@string/engine_model"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="354"
+                android:id="@+id/mpg"
+                android:paddingLeft="@dimen/vehicle_status_text_left_pad"
+                android:textSize="@dimen/default_text_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/vehicle_status_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="@string/engine_hours"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="25 hr"
+                android:id="@+id/avg_speed"
+                android:paddingLeft="@dimen/vehicle_status_text_left_pad"
+                android:textSize="@dimen/default_text_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/vehicle_status_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="@string/engine_temp"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="130 C"
+                android:id="@+id/driver_name"
+                android:paddingLeft="@dimen/vehicle_status_text_left_pad"
+                android:textSize="@dimen/default_text_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/vehicle_status_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="@string/fuel_temp"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="74 F"
+                android:id="@+id/verified"
+                android:paddingLeft="@dimen/vehicle_status_text_left_pad"
+                android:textSize="@dimen/default_text_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/vehicle_status_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="@string/oil_pressure"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="2.2 psi"
+                android:id="@+id/oil_pressure"
+                android:paddingLeft="@dimen/vehicle_status_text_left_pad"
+                android:textSize="@dimen/default_text_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/vehicle_status_row_spacing">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size"
+                android:text="@string/trouble_codes"
+                android:textSize="@dimen/default_text_size" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/vehicle_status_text_view_size" />
+
+        </TableRow>
+    </TableLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="103dp"
+        android:id="@+id/trouble_code_list"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.23"
+        android:layout_below="@+id/tableLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/ok_btn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@android:string/ok"
+        android:id="@+id/ok_btn"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:width="@dimen/vehicle_status_btn_size"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
