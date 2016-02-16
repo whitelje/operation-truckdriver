@@ -116,34 +116,28 @@ public class MainActivity extends AppCompatActivity
     public void vehicle_listener(View view) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, VehicleFragment.newInstance());
-        ft.addToBackStack("main");
+        ft.addToBackStack(null);
         ft.commit();
     }
 
     // TripReviewFragment.OnInteractionListener
     @Override
     public void onCancelButtonClicked() {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.container, ReviewFragment.newInstance(1));
-        ft.commit();
-        fm.popBackStack();
+        onBackPressed();
     }
 
     @Override
     public void onListFragmentInteraction(ReviewItem item) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, TripReviewFragment.newInstance(item));
-        ft.addToBackStack("review");
+        ft.addToBackStack(null);
         ft.commit();
 
     }
 
     @Override
     public void onCloseVehicleFragmentClicked() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, MainActivityFragment.newInstance());
-        ft.commit();
+        onBackPressed();
     }
 
     class MyHandler extends Handler {
