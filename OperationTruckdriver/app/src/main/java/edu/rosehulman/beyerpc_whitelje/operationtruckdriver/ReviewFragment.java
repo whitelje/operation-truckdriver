@@ -33,7 +33,6 @@ public class ReviewFragment extends Fragment {
     }
 
     // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
     public static ReviewFragment newInstance(int columnCount) {
         ReviewFragment fragment = new ReviewFragment();
         Bundle args = new Bundle();
