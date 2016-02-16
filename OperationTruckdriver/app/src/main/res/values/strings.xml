@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">OperationTruckdriver</string>
     <string name="google_maps_key">AIzaSyA3Z3WwaTayS-xJebmX6JWqKSXuEDGPA5M</string>
+    <string name="google_maps_roads_key">AIzaSyCphb1h4R5w63S2b-WpskO-fZnIAbo-djw</string>
     <!-- Strings related to login -->
     <string name="prompt_user_id">User ID</string>
     <string name="prompt_password">Password</string>

@@ -3,7 +3,6 @@ package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -26,19 +25,16 @@ public class MainActivity extends AppCompatActivity
     private boolean logged_in = false;
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if(resultCode == Activity.RESULT_CANCELED) {
-            if(mBluetoothService != null) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_CANCELED) {
+            if (mBluetoothService != null) {
                 mBluetoothService.start();
             }
         }
-        switch (requestCode)
-        {
+        switch (requestCode) {
             case REQUEST_CONNECT_DEVICE_INSECURE:
                 // When DeviceListActivity returns with a bluetoothDevice to connect
-                if (resultCode == Activity.RESULT_OK)
-                {
+                if (resultCode == Activity.RESULT_OK) {
                     final String address = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
                     mBluetoothService.connectDevice(address);
                 }
@@ -58,7 +54,6 @@ public class MainActivity extends AppCompatActivity
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 1;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +62,7 @@ public class MainActivity extends AppCompatActivity
         mBluetoothService = new BluetoothService(this, mHandler);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        if(!logged_in) {
+        if (!logged_in) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivityForResult(intent, LoginActivity.REQUEST_LOGIN);
         } else {
