@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -125,6 +126,36 @@ public class MainActivity extends AppCompatActivity
         ft.replace(R.id.container, VehicleFragment.newInstance());
         ft.addToBackStack(null);
         ft.commit();
+        sendRequests();
+    }
+
+    public static final long[] INIT_J1939_FILTERS = new long[]{61444, 64997, 65217, 65262, 65263, 65265, 65266, 65270, 65226};
+    public static final long[] INIT_J1939_REQUESTS = new long[]{65209, 65214, 65244, 65253, 65255, 65257, 65259, 65260, 65261,
+            65227};
+
+    private void sendRequests() {
+        for (long pgn : INIT_J1939_REQUESTS) {
+            sendCommand(VnaMessageHandler.requestJ1939((byte) 0, pgn));
+            try {
+                Thread.sleep(25);
+            } catch (InterruptedException e) {
+                Log.e(Constants.TAG, "Sleep interruption");
+            }
+        }
+    }
+
+    private void initJ1939() {
+        for (long pgn : INIT_J1939_FILTERS) {
+            sendCommand(VnaMessageHandler.filterAddDelJ1939((byte) 0, pgn));
+        }
+        for (long pgn : INIT_J1939_REQUESTS) {
+            sendCommand(VnaMessageHandler.filterAddDelJ1939((byte) 0, pgn));
+        }
+    }
+
+
+    private void sendCommand(TxStruct command) {
+        mBluetoothService.write(command.getBuf(), 0, command.getLen());
     }
 
     public void logout(View view) {
@@ -176,6 +207,7 @@ public class MainActivity extends AppCompatActivity
                     switch (msg.arg1) {
                         case BluetoothService.STATE_CONNECTED:
                             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
+                            initJ1939();
                             break;
                         case BluetoothService.STATE_CONNECTING:
                             setStatus(R.string.title_connecting);
