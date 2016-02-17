@@ -8,6 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.text.BreakIterator;
 
 
 /**
@@ -30,13 +35,25 @@ public class VehicleFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private String mVIN;
+    private String mEngineMake;
+    private String mEngineModel;
+    private double mEngineTemp;
+    private double mOdometer;
+    private double mEngineHours;
+    private double mOilPSI;
+    private TextView mEngineTempView;
+    private TextView mOdometerView;
+    private TextView mOilPressureView;
+    private TextView mEngineHoursView;
+    private TextView mVinView;
+    private TextView mEngineMakeView;
+    private TextView mEngineModelView;
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment VehicleFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -71,7 +88,20 @@ public class VehicleFragment extends Fragment {
                 onButtonPressed();
             }
         });
+
+        getTextViews(view);
+
         return view;
+    }
+
+    private void getTextViews(View view) {
+        mEngineTempView = (TextView) view.findViewById(R.id.vehicleFrag_engine_temp);
+        mOdometerView = (TextView) view.findViewById(R.id.vehicleFrag_odometer);
+        mOilPressureView = (TextView) view.findViewById(R.id.vehicleFrag_oil_psi);
+        mEngineHoursView = (TextView) view.findViewById(R.id.vehicleFrag_engine_hours);
+        mVinView = (TextView) view.findViewById(R.id.vehicleFrag_VIN);
+        mEngineMakeView = (TextView) view.findViewById(R.id.vehicleFrag_engine_make);
+        mEngineModelView = (TextView) view.findViewById(R.id.vehicleFrag_engine_model);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -101,27 +131,40 @@ public class VehicleFragment extends Fragment {
     public void updateLabel(int pgn, double value) {
         switch(pgn) {
             case 65262:
-                // coolant
+                // engine temp
+                mEngineTemp = value;
+                mEngineTempView.setText(value + " F");
                 break;
             case 65217:
                 // odo
+                mOdometer = value;
+                mOdometerView.setText(value + " MI");
                 break;
             case 65263:
                 // oil pressure
+                mOilPSI = value;
+                mOilPressureView.setText(value + " PSI");
                 break;
             case 65253:
                 // engine hours
+                mEngineHours = value;
+                mEngineHoursView.setText(value + "Hours");
                 break;
         }
 
     }
 
     public void updateLabel(int pgn, String make, String model, String serial) {
-
+        mEngineMake = make;
+        mEngineMakeView.setText(make);
+        mEngineModel = model;
+        mEngineModelView.setText(model);
     }
 
-    public void updateLabel(String string) {
+    public void updateLabel(String vin) {
         // vin
+        mVIN = vin;
+        mVinView.setText(vin);
     }
 
     /**
