@@ -387,7 +387,7 @@ public class VnaMessageHandler {
                         break;
                     case 0x0D:
                         value = mBuffer[10] * KM_TO_MI;
-                        bundle.putInt(Constants.J1939_PGN, 61444);
+                        bundle.putInt(Constants.J1939_PGN, 65261);
                         bundle.putDouble(Constants.J1939_VALUE, value);
                         break;
                 }

@@ -380,7 +380,7 @@ public class TripFragment extends Fragment implements
                 break;
             case 65261:
                 // Speed
-                mSpeedometerText.setText(value + " MPH");
+                mSpeedometerText.setText((int)value + " MPH");
                 mSpeedometer.setSpeed(value, true);
                 break;
             case 65217:

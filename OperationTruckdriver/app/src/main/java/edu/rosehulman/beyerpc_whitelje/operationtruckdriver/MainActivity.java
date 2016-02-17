@@ -54,11 +54,11 @@ public class MainActivity extends AppCompatActivity
                 logged_in = true;
                 Firebase userFirebase = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_USERS + "/" + SharedPreferencesUtils.getCurrentUser(this));
                 userFirebase.child("name").setValue("Payden Beyer");
-//                if(mBluetoothService != null &&
-//                        mBluetoothService.getState() == BluetoothService.STATE_NONE) {
-//                    Intent intent = new Intent(this, DeviceListActivity.class);
-//                    startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
-//                }
+                if(mBluetoothService != null &&
+                        mBluetoothService.getState() == BluetoothService.STATE_NONE) {
+                    Intent intent = new Intent(this, DeviceListActivity.class);
+                    startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
+                }
                 break;
         }
     }
@@ -81,8 +81,8 @@ public class MainActivity extends AppCompatActivity
         if (mFirebaseRef.getAuth() == null) {
             GoToLoginActivity();
         } else {
-//            Intent intent = new Intent(this, DeviceListActivity.class);
-//            startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
+            Intent intent = new Intent(this, DeviceListActivity.class);
+            startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
             Firebase userFirebase = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_USERS + "/" + SharedPreferencesUtils.getCurrentUser(this));
             userFirebase.child("name").setValue("Payden Beyer");
         }
@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity
                     switch (msg.arg1) {
                         case BluetoothService.STATE_CONNECTED:
                             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
-                            initJ1939();
+                            //initJ1939();
                             break;
                         case BluetoothService.STATE_CONNECTING:
                             setStatus(R.string.title_connecting);
@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity
                     }
                     break;
                 case Constants.MESSAGE_STATS_OBD:
-                    if (!blah) {
+                    if (true) {
                         byte[] buf = new byte[7];
                         buf[0] = (byte) 0xC0;
                         buf[1] = (byte) 0;
