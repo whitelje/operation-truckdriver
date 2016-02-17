@@ -41,7 +41,7 @@ public class Trip implements Comparable<Trip> {
 
     @Override
     public int compareTo(Trip another) {
-        return date < another.date ? -1 : date == another.date ? 0 : 1;
+        return date < another.date ? 1 : date == another.date ? 0 : -1;
     }
 
     public String getKey() {

@@ -2,25 +2,21 @@ package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import edu.rosehulman.beyerpc_whitelje.operationtruckdriver.ReviewFragment.OnListFragmentInteractionListener;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
+import edu.rosehulman.beyerpc_whitelje.operationtruckdriver.ReviewFragment.OnListFragmentInteractionListener;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link } and makes a call to the
@@ -40,7 +36,7 @@ public class MyReviewItemRecyclerViewAdapter extends RecyclerView.Adapter<MyRevi
         mValues = new ArrayList<>();
         mListener = listener;
         mUid = SharedPreferencesUtils.getCurrentUser((MainActivity) listener);
-        df = DateFormat.getMediumDateFormat((MainActivity) listener);
+        df = DateFormat.getDateFormat((MainActivity) listener);
         mFirebaseUsersRef = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_USERS + "/" + mUid);
         Firebase trips = mFirebaseUsersRef.child("trips");
         trips.addListenerForSingleValueEvent(new ValueEventListener() {
