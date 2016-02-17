@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="Volvo"
-                android:id="@+id/end_city"
+                android:id="@+id/tripFrag_engine_temp"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="16AI8739102AD"
-                android:id="@+id/total_time"
+                android:id="@+id/tripFrag_MPG"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="Cummins"
-                android:id="@+id/stops"
+                android:id="@+id/tripFrag_oil_psi"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -143,7 +143,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="354"
-                android:id="@+id/mpg"
+                android:id="@+id/tripFrag_distance"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -165,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/vehicle_status_text_view_size"
                 android:text="25 hr"
-                android:id="@+id/avg_speed"
+                android:id="@+id/tripFrag_odometer"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
