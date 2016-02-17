@@ -20,8 +20,10 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.GeoApiContext;
@@ -96,24 +98,12 @@ public class TripReviewFragment extends Fragment {
         Firebase something = mFirebaseTripRef.child("points");
         something.addListenerForSingleValueEvent(new DataPointListener());
 
-        LatLng p1 = new LatLng(39.486879, -87.259233);
-        LatLng p2 = new LatLng(39.495654, -87.257674);
-        LatLng p3 = new LatLng(39.495624, -87.260764);
-        LatLng p4 = new LatLng(39.493290, -87.271722);
-        LatLng p5 = new LatLng(39.486343, -87.303550);
-        LatLng p6 = new LatLng(39.481084, -87.322716);
-        LatLng p7 = new LatLng(39.481738, -87.323692);
-        mCapturedLocations.add(p1);
-        mCapturedLocations.add(p2);
-        mCapturedLocations.add(p3);
-        mCapturedLocations.add(p4);
-        mCapturedLocations.add(p5);
-        mCapturedLocations.add(p6);
-        mCapturedLocations.add(p7);
-
         mContext = new GeoApiContext().setApiKey(getString(R.string.google_maps_key));
+        final com.google.android.gms.maps.model.LatLng pos = new  com.google.android.gms.maps.model.LatLng(39.50, -98.35);
 
-        SupportMapFragment mMap = SupportMapFragment.newInstance();
+        CameraPosition camera = new CameraPosition(pos, 3, 0, 0);
+        GoogleMapOptions options = new GoogleMapOptions().camera(camera);
+        SupportMapFragment mMap = SupportMapFragment.newInstance(options);
         mMap.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
@@ -123,10 +113,9 @@ public class TripReviewFragment extends Fragment {
                 } else {
                     googleMap.getUiSettings().setMapToolbarEnabled(false);
                     googleMap.getUiSettings().setMyLocationButtonEnabled(false);
-                    googleMap.getUiSettings().setScrollGesturesEnabled(false);
-                    googleMap.getUiSettings().setZoomGesturesEnabled(false);
+                    googleMap.getUiSettings().setScrollGesturesEnabled(true);
+                    googleMap.getUiSettings().setZoomGesturesEnabled(true);
                     mGmap = googleMap;
-                    drawLines();
                 }
             }
         });
@@ -170,7 +159,7 @@ public class TripReviewFragment extends Fragment {
             // Perform the request. Because we have interpolate=true, we will get extra data points
             // between our originally requested path. To ensure we can concatenate these points, we
             // only start adding once we've hit the first new point (i.e. skip the overlap).
-            SnappedPoint[] points = RoadsApi.snapToRoads(context, false, page).await();
+            SnappedPoint[] points = RoadsApi.snapToRoads(context, true, page).await();
             boolean passedOverlap = false;
             for (SnappedPoint point : points) {
                 if (offset == 0 || point.originalIndex >= PAGINATION_OVERLAP) {
@@ -203,9 +192,9 @@ public class TripReviewFragment extends Fragment {
             }
 
             mGmap.addPolyline(new PolylineOptions().add(mapPoints).color(Color.BLUE).width(4));
-            mGmap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 35));
+            mGmap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 35));
         } catch(Exception e){
-            //do nothing
+            Log.d("ERR", e.getMessage());
         }
     }
 
@@ -294,5 +283,17 @@ public class TripReviewFragment extends Fragment {
 
     private void updateUI() {
         Log.d(Constants.TAG, mList.size() + "");
+
+        getActivity().runOnUiThread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        for (DataPoint dp : mList) {
+                            mCapturedLocations.add(new LatLng(dp.getPosLat(), dp.getPosLng()));
+                        }
+                        drawLines();
+                    }
+                }
+        );
     }
 }
