@@ -390,7 +390,7 @@ public class VnaMessageHandler {
 
     }
 
-    private int cksum(byte[] commandBytes) {
+    private static int cksum(byte[] commandBytes) {
         int count = 0;
 
         for (int i = 1; i < commandBytes.length; i++) {
@@ -400,7 +400,7 @@ public class VnaMessageHandler {
         return (byte) (~(count & 0xFF) + (byte) 1);
     }
 
-    private int cksum(byte[] data, int numbytes) {
+    private static int cksum(byte[] data, int numbytes) {
         int count = 0;
 
         for (int i = 0; i < numbytes; i++) {
@@ -409,7 +409,109 @@ public class VnaMessageHandler {
         return (byte) (~(count & 0xFF) + (byte) 1);
     }
 
-    private int uByte(byte b) {
+    private static int uByte(byte b) {
         return (int) b & 0xFF;
+    }
+
+
+    public static TxStruct filterAddDelJ1939(byte port, long pgnLong)
+    {
+        byte[] pgn = new byte[3];
+
+        pgn[0] = (byte) ((pgnLong >> 16) & 0xFF);
+        pgn[1] = (byte) ((pgnLong >> 8) & 0xFF);
+        pgn[2] = (byte) ((pgnLong) & 0xFF);
+
+        byte[] message = new byte[8];
+        byte[] stuffed = new byte[17];
+        int cnt;
+
+        message[0] = 0;
+        message[1] = 6;
+        message[2] = (byte) VNA_MSG_FA_J1939;
+        message[3] = port;
+        System.arraycopy(pgn, 0, message, 4, 3);
+
+        message[7] = (byte) cksum(message);
+
+
+        // Tack on beginning of string marker
+
+        stuffed[0] = RS232_FLAG;
+
+
+        int esc_cnt = 1;
+
+        // Bytestuff
+        for( cnt = 0; cnt < 8; cnt++ )
+        {
+            if( message[cnt] == RS232_FLAG )
+            {
+                stuffed[cnt+esc_cnt] = RS232_ESCAPE;
+                esc_cnt++;
+                stuffed[cnt+esc_cnt] = RS232_ESCAPE_FLAG;
+            }
+            else if( message[cnt] == RS232_ESCAPE )
+            {
+                stuffed[cnt+esc_cnt] = RS232_ESCAPE;
+                esc_cnt++;
+                stuffed[cnt+esc_cnt] = RS232_ESCAPE_ESCAPE;
+            }
+            else
+            {
+                stuffed[cnt+esc_cnt] = message[cnt];
+            }
+        }
+        return new TxStruct(stuffed, cnt+esc_cnt);
+    }
+
+    public static TxStruct requestJ1939(byte port, long pgnLong) {
+
+        // c0 00 0a 05 00 pp gg nn 00 00 00 ff xx
+        //                  PGN
+        byte[] pgn = new byte[3];
+        byte[] stuffed = new byte[30];
+
+        pgn[0] = (byte) ((pgnLong) & 0xFF);
+        pgn[1] = (byte) ((pgnLong >> 8) & 0xFF);
+        pgn[2] = (byte) ((pgnLong >> 16) & 0xFF);
+
+        byte[] message = new byte[14];
+        int cnt;
+
+        message[0] = 0;
+        message[1] = (byte) (message.length - 2);
+        message[2] = VNA_MSG_TX_J1939;
+        message[3] = port;
+        System.arraycopy(new byte[]{(byte) 0x00, (byte) 0xEA, (byte) 0x00}, 0, message, 4, 3);
+
+        message[7] = (byte) 255; 	// destination addr
+        message[8] = (byte) 252;				// source addr
+        message[9] = 6;				// priority
+
+        System.arraycopy(pgn, 0, message, 10, 3);
+
+        message[13]	= (byte) cksum(message);
+
+        // Tack on
+        // beginning of string marker
+        stuffed[0] = RS232_FLAG;
+        int esc_cnt = 1;
+        // bytestuff
+        for (cnt = 0; cnt < message.length; cnt++) {
+            if (message[cnt] == RS232_FLAG) {
+                stuffed[cnt + esc_cnt] = RS232_ESCAPE;
+                esc_cnt++;
+                stuffed[cnt + esc_cnt] = RS232_ESCAPE_FLAG;
+            } else if (message[cnt] == RS232_ESCAPE) {
+                stuffed[cnt + esc_cnt] = RS232_ESCAPE;
+                esc_cnt++;
+                stuffed[cnt + esc_cnt] = RS232_ESCAPE_ESCAPE;
+            } else {
+                stuffed[cnt + esc_cnt] = message[cnt];
+            }
+        }
+
+        return new TxStruct(stuffed, cnt+esc_cnt);
     }
 }

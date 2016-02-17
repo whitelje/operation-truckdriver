@@ -139,6 +139,18 @@ public class BluetoothService {
         setState(STATE_NONE);
     }
 
+    public void write(byte[] buf, int i, int len) {
+            // Create temporary object
+            ConnectedThread r;
+            // Synchronize a copy of the ConnectedThread
+            synchronized (this) {
+                if (mState != STATE_CONNECTED) return;
+                r = mConnectedThread;
+            }
+            // Perform the write unsynchronized
+            r.write(buf, i, len);
+    }
+
     private class ConnectThread extends Thread {
 
         private final BluetoothSocket mmSocket;
@@ -270,6 +282,14 @@ public class BluetoothService {
                 mmSocket.close();
             } catch (IOException e) {
                 Log.e(TAG, "close() of connect socket failed", e);
+            }
+        }
+
+        public void write(byte[] buf, int i, int len) {
+            try {
+                mmOutStream.write(buf, i, len);
+            } catch (IOException e) {
+                Log.e(TAG, "Exception during write", e);
             }
         }
     }

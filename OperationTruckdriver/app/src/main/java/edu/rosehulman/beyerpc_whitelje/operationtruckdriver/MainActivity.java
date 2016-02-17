@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,8 +20,8 @@ import com.firebase.client.Firebase;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-    implements TripReviewFragment.OnFragmentInteractionListener,
-                VehicleFragment.OnFragmentInteractionListener,
+        implements TripReviewFragment.OnFragmentInteractionListener,
+        VehicleFragment.OnFragmentInteractionListener,
         ReviewFragment.OnListFragmentInteractionListener,
         TripFragment.OnFragmentInteractionListener
 
@@ -125,6 +126,36 @@ public class MainActivity extends AppCompatActivity
         ft.replace(R.id.container, VehicleFragment.newInstance());
         ft.addToBackStack(null);
         ft.commit();
+        sendRequests();
+    }
+
+    public static final long[] INIT_J1939_FILTERS = new long[]{61444, 64997, 65217, 65262, 65263, 65265, 65266, 65270, 65226};
+    public static final long[] INIT_J1939_REQUESTS = new long[]{65209, 65214, 65244, 65253, 65255, 65257, 65259, 65260, 65261,
+            65227};
+
+    private void sendRequests() {
+        for (long pgn : INIT_J1939_REQUESTS) {
+            sendCommand(VnaMessageHandler.requestJ1939((byte) 0, pgn));
+            try {
+                Thread.sleep(25);
+            } catch (InterruptedException e) {
+                Log.e(Constants.TAG, "Sleep interruption");
+            }
+        }
+    }
+
+    private void initJ1939() {
+        for (long pgn : INIT_J1939_FILTERS) {
+            sendCommand(VnaMessageHandler.filterAddDelJ1939((byte) 0, pgn));
+        }
+        for (long pgn : INIT_J1939_REQUESTS) {
+            sendCommand(VnaMessageHandler.filterAddDelJ1939((byte) 0, pgn));
+        }
+    }
+
+
+    private void sendCommand(TxStruct command) {
+        mBluetoothService.write(command.getBuf(), 0, command.getLen());
     }
 
     public void logout(View view) {
@@ -132,7 +163,7 @@ public class MainActivity extends AppCompatActivity
         GoToLoginActivity();
     }
 
-    public void GoToLoginActivity(){
+    public void GoToLoginActivity() {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivityForResult(intent, LoginActivity.REQUEST_LOGIN);
     }
@@ -176,6 +207,7 @@ public class MainActivity extends AppCompatActivity
                     switch (msg.arg1) {
                         case BluetoothService.STATE_CONNECTED:
                             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
+                            initJ1939();
                             break;
                         case BluetoothService.STATE_CONNECTING:
                             setStatus(R.string.title_connecting);
@@ -211,7 +243,7 @@ public class MainActivity extends AppCompatActivity
                     }
                     break;
                 case Constants.MESSAGE_STATS_OBD:
-                    if(!blah) {
+                    if (!blah) {
                         byte[] buf = new byte[7];
                         buf[0] = (byte) 0xC0;
                         buf[1] = (byte) 0;
@@ -230,14 +262,28 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case Constants.MESSAGE_RX_J1939:
                     List<Fragment> frags = getSupportFragmentManager().getFragments();
-                    if(frags.isEmpty()) {
+                    if (frags.isEmpty()) {
                         // run for the hills
                     } else {
-                        for(Fragment frag : frags) {
-                            if(frag instanceof TripFragment && frag.isVisible()) {
+                        for (Fragment frag : frags) {
+                            if (frag instanceof TripFragment && frag.isVisible()) {
                                 TripFragment tf = (TripFragment) frag;
                                 tf.updateLabel(msg.getData().getInt(Constants.J1939_PGN),
                                         msg.getData().getDouble(Constants.J1939_VALUE));
+                            } else if (frag instanceof VehicleFragment && frag.isVisible()) {
+                                VehicleFragment vf = (VehicleFragment) frag;
+                                int pgn = msg.getData().getInt(Constants.J1939_PGN);
+                                if (pgn == 65259) {
+                                    vf.updateLabel(pgn,
+                                            msg.getData().getString(Constants.J1939_MAKE),
+                                            msg.getData().getString(Constants.J1939_MODEL),
+                                            msg.getData().getString(Constants.J1939_SERIAL));
+                                } else if (pgn == 65260) {
+                                    vf.updateLabel(msg.getData().getString(Constants.J1939_VIN));
+                                } else {
+                                    vf.updateLabel(pgn,
+                                            msg.getData().getDouble(Constants.J1939_VALUE));
+                                }
                             }
                         }
                     }
