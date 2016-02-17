@@ -19,8 +19,8 @@ import com.firebase.client.Firebase;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-    implements TripReviewFragment.OnFragmentInteractionListener,
-                VehicleFragment.OnFragmentInteractionListener,
+        implements TripReviewFragment.OnFragmentInteractionListener,
+        VehicleFragment.OnFragmentInteractionListener,
         ReviewFragment.OnListFragmentInteractionListener,
         TripFragment.OnFragmentInteractionListener
 
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity
         GoToLoginActivity();
     }
 
-    public void GoToLoginActivity(){
+    public void GoToLoginActivity() {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivityForResult(intent, LoginActivity.REQUEST_LOGIN);
     }
@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity
                     }
                     break;
                 case Constants.MESSAGE_STATS_OBD:
-                    if(!blah) {
+                    if (!blah) {
                         byte[] buf = new byte[7];
                         buf[0] = (byte) 0xC0;
                         buf[1] = (byte) 0;
@@ -230,14 +230,28 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case Constants.MESSAGE_RX_J1939:
                     List<Fragment> frags = getSupportFragmentManager().getFragments();
-                    if(frags.isEmpty()) {
+                    if (frags.isEmpty()) {
                         // run for the hills
                     } else {
-                        for(Fragment frag : frags) {
-                            if(frag instanceof TripFragment && frag.isVisible()) {
+                        for (Fragment frag : frags) {
+                            if (frag instanceof TripFragment && frag.isVisible()) {
                                 TripFragment tf = (TripFragment) frag;
                                 tf.updateLabel(msg.getData().getInt(Constants.J1939_PGN),
                                         msg.getData().getDouble(Constants.J1939_VALUE));
+                            } else if (frag instanceof VehicleFragment && frag.isVisible()) {
+                                VehicleFragment vf = (VehicleFragment) frag;
+                                int pgn = msg.getData().getInt(Constants.J1939_PGN);
+                                if (pgn == 65259) {
+                                    vf.updateLabel(pgn,
+                                            msg.getData().getString(Constants.J1939_MAKE),
+                                            msg.getData().getString(Constants.J1939_MODEL),
+                                            msg.getData().getString(Constants.J1939_SERIAL));
+                                } else if (pgn == 65260) {
+                                    vf.updateLabel(msg.getData().getString(Constants.J1939_VIN));
+                                } else {
+                                    vf.updateLabel(pgn,
+                                            msg.getData().getDouble(Constants.J1939_VALUE));
+                                }
                             }
                         }
                     }

@@ -98,6 +98,32 @@ public class VehicleFragment extends Fragment {
         mListener = null;
     }
 
+    public void updateLabel(int pgn, double value) {
+        switch(pgn) {
+            case 65262:
+                // coolant
+                break;
+            case 65217:
+                // odo
+                break;
+            case 65263:
+                // oil pressure
+                break;
+            case 65253:
+                // engine hours
+                break;
+        }
+
+    }
+
+    public void updateLabel(int pgn, String make, String model, String serial) {
+
+    }
+
+    public void updateLabel(String string) {
+        // vin
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
