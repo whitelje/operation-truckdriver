@@ -67,8 +67,7 @@ public class MainActivity extends AppCompatActivity
         Firebase.setAndroidContext(this);
         mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
         if (mFirebaseRef.getAuth() == null) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivityForResult(intent, LoginActivity.REQUEST_LOGIN);
+            GoToLoginActivity();
         } else {
 //            Intent intent = new Intent(this, DeviceListActivity.class);
 //            startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
@@ -122,6 +121,16 @@ public class MainActivity extends AppCompatActivity
         ft.commit();
     }
 
+    public void logout(View view) {
+        mFirebaseRef.unauth();
+        GoToLoginActivity();
+    }
+
+    public void GoToLoginActivity(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivityForResult(intent, LoginActivity.REQUEST_LOGIN);
+    }
+
     // TripReviewFragment.OnInteractionListener
     @Override
     public void onCancelButtonClicked() {
@@ -134,7 +143,6 @@ public class MainActivity extends AppCompatActivity
         ft.replace(R.id.container, TripReviewFragment.newInstance(item));
         ft.addToBackStack(null);
         ft.commit();
-
     }
 
     @Override
