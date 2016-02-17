@@ -2,6 +2,8 @@ package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 
 import android.Manifest;
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -31,6 +34,7 @@ import com.google.maps.RoadsApi;
 import com.google.maps.model.LatLng;
 import com.google.maps.model.SnappedPoint;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -61,6 +65,13 @@ public class TripReviewFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private List<DataPoint> mList;
+    private TextView startView;
+    private TextView endView;
+    private TextView distView;
+    private TextView timeView;
+    private TextView stopsView;
+    private TextView mpgView;
+    private TextView speedView;
 
     public TripReviewFragment() {
         // Required empty public constructor
@@ -87,6 +98,9 @@ public class TripReviewFragment extends Fragment {
         if (getArguments() != null) {
             tripID = getArguments().getString("Trip");
         }
+
+        mList = new ArrayList<>();
+
     }
 
     @Override
@@ -126,6 +140,13 @@ public class TripReviewFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_trip_review, container, false);
+        startView = (TextView) view.findViewById(R.id.start_city);
+        endView = (TextView) view.findViewById(R.id.end_city);
+        distView = (TextView) view.findViewById(R.id.tripReview_distance);
+        timeView = (TextView) view.findViewById(R.id.tripReview_time);
+        stopsView = (TextView) view.findViewById(R.id.tripReview_stops);
+        mpgView = (TextView) view.findViewById(R.id.tripReview_mpg);
+        speedView = (TextView) view.findViewById(R.id.tripReview_speed);
         Button btn = (Button) view.findViewById(R.id.cancel_btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,7 +247,7 @@ public class TripReviewFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
+     * <p>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
@@ -239,17 +260,19 @@ public class TripReviewFragment extends Fragment {
     private class DataPointListener implements ValueEventListener {
         FutureTask<String> ft = null;
         ExecutorService exService = Executors.newSingleThreadExecutor();
+
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            for(DataSnapshot ds : dataSnapshot.getChildren()) {
+            for (DataSnapshot ds : dataSnapshot.getChildren()) {
                 Firebase fb = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_POINTS + "/" + ds.getKey());
                 fb.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         DataPoint dp = dataSnapshot.getValue(DataPoint.class);
                         mList.add(dp);
+                        // approved by Google employee
                         Collections.sort(mList);
-                        if(ft != null) {
+                        if (ft != null) {
                             ft.cancel(true);
                         }
                         UpdateUI call = new UpdateUI();
@@ -295,5 +318,65 @@ public class TripReviewFragment extends Fragment {
                     }
                 }
         );
+
+        Geocoder geocoder = new Geocoder(getContext());
+        if(mList.size() < 3) {
+            return;
+        }
+        DataPoint firstPoint = mList.get(1);
+        DataPoint lastPoint = mList.get(mList.size() - 1);
+        Log.d(Constants.TAG, firstPoint.time + "");
+        Log.d(Constants.TAG, lastPoint.time + "");
+        try {
+            List<Address> firstLocList =
+                    geocoder.getFromLocation(firstPoint.getPosLat(), firstPoint.getPosLng(), 1);
+            List<Address> lastLocList =
+                    geocoder.getFromLocation(lastPoint.getPosLat(), lastPoint.getPosLng(), 1);
+            String firstCity = firstLocList.get(0).getLocality();
+            String  lastCity =  lastLocList.get(0).getLocality();
+            String firstState = firstLocList.get(0).getAdminArea();
+            String  lastState =  lastLocList.get(0).getAdminArea();
+            final String firstLoc = firstCity + ", " + firstState;
+            final String  lastLoc =  lastCity + ", " +  lastState;
+
+
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    startView.setText(firstLoc);
+                    endView.setText(lastLoc);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        double dist = lastPoint.getDistance();
+        final String distanceString = String.format("%.0f mi",dist);
+
+        long timeDelta = lastPoint.getTime() - firstPoint.getTime();
+        timeDelta = timeDelta / 1000;
+        int seconds = (int) timeDelta % 60;
+        int minutes = (int) (timeDelta % 3600) / 60;
+        int hours = (int) (timeDelta % 86400) / 3600;
+        final String timeString = String.format("%d:%02d:%02d", hours, minutes, seconds);
+
+        double mpg = lastPoint.getTripMpg();
+        final String mpgString = mpg+"";
+
+        double avg_speed = dist / timeDelta / 1000;
+        final String avgSpeedString = String.format("%d mph", (int) avg_speed);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                distView.setText(distanceString);
+                timeView.setText(timeString);
+                stopsView.setText("0");
+                mpgView.setText(mpgString);
+                speedView.setText(avgSpeedString);
+
+            }
+        });
     }
 }

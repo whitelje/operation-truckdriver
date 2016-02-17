@@ -5,7 +5,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="190dp"
         android:id="@+id/trip_review_map_container"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -53,7 +53,7 @@
                 android:textSize="@dimen/default_text_size" />
 
             <TextView
-                android:id="@+id/tripFrag_engine_temp"
+                android:id="@+id/end_city"
                 android:layout_width="@dimen/trip_review_text_view_size"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/trip_review_text_left_pad"
@@ -74,7 +74,7 @@
                 android:textSize="@dimen/default_text_size" />
 
             <TextView
-                android:id="@+id/distance"
+                android:id="@+id/tripReview_distance"
                 android:layout_width="@dimen/trip_review_text_view_size"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/trip_review_text_left_pad"
@@ -95,7 +95,7 @@
                 android:textSize="@dimen/default_text_size" />
 
             <TextView
-                android:id="@+id/tripFrag_MPG"
+                android:id="@+id/tripReview_time"
                 android:layout_width="@dimen/trip_review_text_view_size"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/trip_review_text_left_pad"
@@ -116,7 +116,7 @@
                 android:textSize="@dimen/default_text_size" />
 
             <TextView
-                android:id="@+id/tripFrag_oil_psi"
+                android:id="@+id/tripReview_stops"
                 android:layout_width="@dimen/trip_review_text_view_size"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/trip_review_text_left_pad"
@@ -137,7 +137,7 @@
                 android:textSize="@dimen/default_text_size" />
 
             <TextView
-                android:id="@+id/tripFrag_distance"
+                android:id="@+id/tripReview_mpg"
                 android:layout_width="@dimen/trip_review_text_view_size"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/trip_review_text_left_pad"
@@ -158,7 +158,7 @@
                 android:textSize="@dimen/default_text_size" />
 
             <TextView
-                android:id="@+id/tripFrag_odometer"
+                android:id="@+id/tripReview_speed"
                 android:layout_width="@dimen/trip_review_text_view_size"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/trip_review_text_left_pad"
