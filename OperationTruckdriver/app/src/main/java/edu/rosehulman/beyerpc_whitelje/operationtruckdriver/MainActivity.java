@@ -7,12 +7,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
     implements TripReviewFragment.OnFragmentInteractionListener,
@@ -224,6 +228,38 @@ public class MainActivity extends AppCompatActivity
                     // write to firebase
                     // write to trip view
                     break;
+                case Constants.MESSAGE_RX_J1939:
+                    List<Fragment> frags = getSupportFragmentManager().getFragments();
+                    if(frags.isEmpty()) {
+                        // run for the hills
+                    } else {
+                        for(Fragment frag : frags) {
+                            if(frag instanceof TripFragment && frag.isVisible()) {
+                                TripFragment tf = (TripFragment) frag;
+                                switch(msg.getData().getInt(Constants.J1939_PGN)) {
+                                    case 61444:
+                                        ((TextView)findViewById(R.id.tripFrag_rpm))
+                                                .setText(msg.getData().getDouble(Constants.J1939_VALUE) + "");
+                                        break;
+                                    case 65266:
+                                        // MPG
+                                        break;
+                                    case 65262:
+                                        // Engine Temp
+                                        break;
+                                    case 65263:
+                                        // Oil Pressure
+                                        break;
+                                    case 65261:
+                                        // Speed
+                                        break;
+                                    case 65217:
+                                        // Odometer
+                                        break;
+                                }
+                            }
+                        }
+                    }
             }
         }
     }

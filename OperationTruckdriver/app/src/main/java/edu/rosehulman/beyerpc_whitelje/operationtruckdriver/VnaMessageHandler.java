@@ -135,10 +135,7 @@ public class VnaMessageHandler {
                 Integer i;
                 StringBuilder sb;
                 String[] fields;
-                String out;
                 Integer length;
-                String spnDescription;
-                String fmiDescription;
                 Message msg = mHandler.obtainMessage(Constants.MESSAGE_RX_J1939);
                 Bundle bundle = new Bundle();
                 double value = 0;
@@ -189,16 +186,6 @@ public class VnaMessageHandler {
                         i = (((mBuffer[13] & 0xFF) << 24) | ((mBuffer[12] & 0xFF) << 16) | ((mBuffer[11] & 0xFF) << 8) | ((mBuffer[10] & 0xFF)));
                         if (i.equals(MAX_32)) break;
                         value = i * 0.005 * KM_TO_MI; /* SPN 917 */
-                        bundle.putInt(Constants.J1939_PGN, pgn);
-                        bundle.putDouble(Constants.J1939_VALUE, value);
-                        msg.setData(bundle);
-                        mHandler.sendMessage(msg);
-
-                        i = (((mBuffer[17] & 0xFF) << 24) | ((mBuffer[16] & 0xFF) << 16) | ((mBuffer[15] & 0xFF) << 8) | ((mBuffer[14] & 0xFF)));
-                        if (i.equals(MAX_32)) break;
-                        value = i * 0.005 * KM_TO_MI; /* SPN 918 */
-                        msg = mHandler.obtainMessage(Constants.MESSAGE_RX_J1939);
-                        bundle = new Bundle();
                         bundle.putInt(Constants.J1939_PGN, pgn);
                         bundle.putDouble(Constants.J1939_VALUE, value);
                         msg.setData(bundle);
@@ -355,17 +342,8 @@ public class VnaMessageHandler {
                         break;
 
                     case 65266:
-                        i = (((mBuffer[11] & 0xFF) << 8) | ((mBuffer[10]) & 0xFF));
-                        if (i.equals(MAX_16)) break;
-                        value = i * 0.05 * L_TO_GAL;
-                        bundle.putInt(Constants.J1939_PGN, pgn);
-                        bundle.putDouble(Constants.J1939_VALUE, value);
-                        msg.setData(bundle);
-                        mHandler.sendMessage(msg); /* SPN 183 */
                         i = (((mBuffer[15] & 0xFF) << 8) | ((mBuffer[14]) & 0xFF));
                         if (i.equals(MAX_16)) break;
-                        msg = mHandler.obtainMessage(Constants.MESSAGE_RX_J1939);
-                        bundle = new Bundle();
                         d = i / 512.0;
                         value = d * 2.35215;
                         bundle.putInt(Constants.J1939_PGN, pgn);

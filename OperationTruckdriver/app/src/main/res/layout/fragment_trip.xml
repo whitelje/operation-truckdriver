@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="@dimen/trip_service_text_view_size"
                     android:text="1100"
-                    android:id="@+id/start_city"
+                    android:id="@+id/tripFrag_rpm"
                     android:paddingLeft="@dimen/trip_service_text_left_pad"
                     android:textSize="@dimen/default_text_size" />
 
