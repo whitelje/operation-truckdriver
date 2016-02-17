@@ -34,7 +34,7 @@ public class Constants {
     public static final String J1939_SERIAL = "j1939_serial";
     public static final String J1939_VIN = "j1939_vin";
 
-    public static final String FIREBASE_URL = "https://truckdriver.firebase.io/";
+    public static final String FIREBASE_URL = "https://truckdriver.firebaseio.com/";
     public static final String FIREBASE_COMPANIES = "companies";
     public static final String FIREBASE_USERS = "users";
     public static final String FIREBASE_TRIPS = "trips";
