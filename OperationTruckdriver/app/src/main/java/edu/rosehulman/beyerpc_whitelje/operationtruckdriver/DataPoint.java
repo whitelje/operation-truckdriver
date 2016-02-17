@@ -167,4 +167,8 @@ public class DataPoint implements Parcelable {
         dest.writeDouble(engineTemp);
         dest.writeInt(dtcCount);
     }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 }

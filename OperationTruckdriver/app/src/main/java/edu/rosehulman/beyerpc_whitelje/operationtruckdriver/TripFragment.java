@@ -266,6 +266,15 @@ public class TripFragment extends Fragment implements
             //TODO: Write to Database
             mLastWrite = currentTime;
             Log.d("LOG", "Write to Firebase");
+            Firebase tripPoint = mTripPointFirebaseRef.push();
+            DataPoint dp = new DataPoint();
+            dp.setPosLat(location.getLatitude());
+            dp.setPosLng(location.getLongitude());
+            tripPoint.setValue(dp);
+
+            Map<String,Object> map = new HashMap<>();
+            map.put(tripPoint.getKey(),true);
+            mTripFirebaseRef.child("points").updateChildren(map);
         }
     }
 
