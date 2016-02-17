@@ -382,11 +382,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             Log.d(Constants.TAG, "User is authenticated");
             mUid = authData.getUid();
             SharedPreferencesUtils.setCurrentUser(getApplicationContext(), mUid);
+            finish();
         }
 
         @Override
         public void onAuthenticationError(FirebaseError firebaseError) {
             Toast.makeText(getApplicationContext(), "User failed authentication: " + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+            showProgress(false);
         }
     }
 }
