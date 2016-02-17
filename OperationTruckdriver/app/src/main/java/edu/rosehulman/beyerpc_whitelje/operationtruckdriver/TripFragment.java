@@ -33,9 +33,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -57,16 +57,31 @@ public class TripFragment extends Fragment implements
     public static final int MAP_MIN_UPDATE_INTERVAL = 7500;
     public static final int WRITE_INTERVAL = 30000;
 
-    // TODO: Rename and change types of parameters
     private String mTripId;
-
     private OnFragmentInteractionListener mListener;
     private GoogleMap mGmap;
     private LocationRequest mLocRequest;
     private GoogleApiClient mLocationClient;
     private long mLastWrite;
+    private long mStartTime;
+    private double mRPM = -1.0;
+    private double mMPG = -1.0;
+    private double mEngineTemp = -1.0;
+    private double mOilPSI = -1.0;
+    private double mOdometer = -1.0;
+    private double mDistance = 0;
     private Firebase mTripFirebaseRef;
     private Firebase mTripPointFirebaseRef;
+    private SpeedometerGauge mSpeedometer;
+    private SpeedometerGauge mTimeGauge;
+    private TextView mRPMView;
+    private TextView mAverageMPGView;
+    private TextView mEngineTempView;
+    private TextView mOilPressureView;
+    private TextView mOdometerView;
+    private TextView mSpeedometerText;
+    private TextView mTimeGaugeText;
+    private TextView mDistanceView;
 
 
     public TripFragment() {
@@ -115,10 +130,7 @@ public class TripFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         setupFirebase();
-
 
         mLocationClient = new GoogleApiClient.Builder(getContext())
                 .addApi(LocationServices.API)
@@ -157,16 +169,31 @@ public class TripFragment extends Fragment implements
 
         View v = inflater.inflate(R.layout.fragment_trip, container, false);
         AddSpeedometerWidgets(v);
+        getTextViews(v);
 
         return v;
     }
 
+    private void getTextViews(View v) {
+        mRPMView = (TextView) v.findViewById(R.id.tripFrag_rpm);
+        mAverageMPGView = (TextView) v.findViewById(R.id.tripFrag_MPG);
+        mEngineTempView = (TextView) v.findViewById(R.id.tripFrag_engine_temp);
+        mOilPressureView = (TextView) v.findViewById(R.id.tripFrag_oil_psi);
+        mOdometerView = (TextView) v.findViewById(R.id.tripFrag_odometer);
+        mSpeedometerText = (TextView) v.findViewById(R.id.speedometer_text);
+        mTimeGaugeText = (TextView) v.findViewById(R.id.time_gauge_text);
+        mDistanceView = (TextView) v.findViewById(R.id.tripFrag_distance);
+    }
+
     private void setupFirebase() {
+        long currentTime = System.currentTimeMillis();
+
+        mStartTime = currentTime;
         Firebase tripRef = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_TRIPS);
         tripRef = tripRef.push();
         mTripId = tripRef.getKey();
         Trip t = new Trip();
-        t.setDate(System.currentTimeMillis());
+        t.setDate(currentTime);
         tripRef.setValue(t);
 
         String userId = SharedPreferencesUtils.getCurrentUser((MainActivity) mListener);
@@ -180,44 +207,44 @@ public class TripFragment extends Fragment implements
     }
 
     private void AddSpeedometerWidgets(View v) {
-        SpeedometerGauge speedometer = (SpeedometerGauge) v.findViewById(R.id.speedometer);
-        speedometer.setLabelConverter(new SpeedometerGauge.LabelConverter() {
+        mSpeedometer = (SpeedometerGauge) v.findViewById(R.id.speedometer);
+        mSpeedometer.setLabelConverter(new SpeedometerGauge.LabelConverter() {
             @Override
             public String getLabelFor(double progress, double maxProgress) {
                 return String.valueOf((int) Math.round(progress));
             }
         });
 
-        speedometer.setMaxSpeed(120);
-        speedometer.setMajorTickStep(20);
-        speedometer.setMinorTicks(1);
+        mSpeedometer.setMaxSpeed(120);
+        mSpeedometer.setMajorTickStep(20);
+        mSpeedometer.setMinorTicks(1);
 
         // Configure value range colors
-        speedometer.addColoredRange(15, 50, Color.GREEN);
-        speedometer.addColoredRange(50, 75, Color.YELLOW);
-        speedometer.addColoredRange(75, 120, Color.RED);
+        mSpeedometer.addColoredRange(15, 50, Color.GREEN);
+        mSpeedometer.addColoredRange(50, 75, Color.YELLOW);
+        mSpeedometer.addColoredRange(75, 120, Color.RED);
 
-        speedometer.setSpeed(45, true);
+        mSpeedometer.setSpeed(0, true);
 
 
-        SpeedometerGauge timeGauge = (SpeedometerGauge) v.findViewById(R.id.time_speedometer);
-        timeGauge.setLabelConverter(new SpeedometerGauge.LabelConverter() {
+        mTimeGauge = (SpeedometerGauge) v.findViewById(R.id.time_speedometer);
+        mTimeGauge.setLabelConverter(new SpeedometerGauge.LabelConverter() {
             @Override
             public String getLabelFor(double progress, double maxProgress) {
                 return String.valueOf((int) Math.round(progress));
             }
         });
 
-        timeGauge.setMaxSpeed(8);
-        timeGauge.setMajorTickStep(1);
-        timeGauge.setMinorTicks(3);
+        mTimeGauge.setMaxSpeed(8);
+        mTimeGauge.setMajorTickStep(1);
+        mTimeGauge.setMinorTicks(3);
 
         // Configure value range colors
-        timeGauge.addColoredRange(0, 5, Color.GREEN);
-        timeGauge.addColoredRange(5, 7, Color.YELLOW);
-        timeGauge.addColoredRange(7, 8, Color.RED);
+        mTimeGauge.addColoredRange(0, 5, Color.GREEN);
+        mTimeGauge.addColoredRange(5, 7, Color.YELLOW);
+        mTimeGauge.addColoredRange(7, 8, Color.RED);
 
-        timeGauge.setSpeed(5.743, true);
+        mTimeGauge.setSpeed(0, true);
     }
 
     @Override
@@ -265,18 +292,38 @@ public class TripFragment extends Fragment implements
 
         if(currentTime - mLastWrite > WRITE_INTERVAL){
             //TODO: Write to Database
+            CalculateDistance(currentTime - mLastWrite);
+
             mLastWrite = currentTime;
             Log.d("LOG", "Write to Firebase");
             Firebase tripPoint = mTripPointFirebaseRef.push();
             DataPoint dp = new DataPoint();
             dp.setPosLat(location.getLatitude());
             dp.setPosLng(location.getLongitude());
+            dp.setEngineTemp(mEngineTemp);
+            dp.setTripMpg(mMPG);
+            dp.setRpm(mRPM);
+            dp.setOilPressure(mOilPSI);
+            dp.setVehicleSpeed(mSpeedometer.getSpeed());
+            dp.setOdometer(mOdometer);
+            dp.setTime(currentTime - mStartTime);
+            dp.setDistance(mDistance);
             tripPoint.setValue(dp);
 
             Map<String,Object> map = new HashMap<>();
             map.put(tripPoint.getKey(),true);
             mTripFirebaseRef.child("points").updateChildren(map);
         }
+    }
+
+    private void CalculateDistance(long time) {
+        if(time > 1000000) return;
+
+        time = time / 1000; //ms -> s
+        double speed = mSpeedometer.getSpeed() / 3600; //mph -> mps
+
+        mDistance += speed * time;
+        mDistanceView.setText((int) mDistance + " MI");
     }
 
     @Override
@@ -306,24 +353,41 @@ public class TripFragment extends Fragment implements
     }
 
     public void updateLabel(int pgn, double value) {
+        long totalTime = System.currentTimeMillis() - mStartTime;
+        int hrs = (int) TimeUnit.MILLISECONDS.toHours(totalTime);
+        int mins = (int) TimeUnit.MILLISECONDS.toMinutes(totalTime);
+        mTimeGauge.setSpeed(totalTime / (1000*60*60));
+        mTimeGaugeText.setText(hrs + "hours " + mins + " mins");
+
         switch(pgn) {
             case 61444:
-                //rpmView.setText(value + "");
+                mRPM = value;
+                mRPMView.setText(value + "");
                 break;
             case 65266:
                 // MPG
+                mMPG = value;
+                mAverageMPGView.setText(value + "");
                 break;
             case 65262:
                 // Engine Temp
+                mEngineTemp = value;
+                mEngineTempView.setText(value + " F");
                 break;
             case 65263:
                 // Oil Pressure
+                mOilPSI = value;
+                mOilPressureView.setText(value + " PSI");
                 break;
             case 65261:
                 // Speed
+                mSpeedometerText.setText(value + " MPH");
+                mSpeedometer.setSpeed(value, true);
                 break;
             case 65217:
                 // Odometer
+                mOdometer = value;
+                mOdometerView.setText(value + " MI");
                 break;
         }
     }

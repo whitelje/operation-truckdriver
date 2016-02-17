@@ -19,7 +19,7 @@
             android:textSize="@dimen/default_text_size"
             android:gravity="center"
             android:layout_below="@+id/speedometer"
-            android:text="45 MPH"/>
+            android:text="@string/no_data"/>
 
         <com.cardiomood.android.controls.gauge.SpeedometerGauge
             android:layout_width="175dp"
@@ -35,11 +35,11 @@
         <TextView
             android:layout_width="175dp"
             android:layout_height="wrap_content"
-            android:id="@+id/time_speedometer_text"
+            android:id="@+id/time_gauge_text"
             android:textSize="@dimen/default_text_size"
             android:gravity="center"
             android:layout_below="@+id/time_speedometer"
-            android:text="5.75 Hours"/>
+            android:text="@string/no_data"/>
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
             android:layout_alignParentEnd="true"
             android:layout_toRightOf="@id/speedometer"
             android:layout_toEndOf="@id/speedometer"
-            android:layout_alignBottom="@id/time_speedometer_text"
+            android:layout_alignBottom="@id/time_gauge_text"
             />
 
         <TableLayout
@@ -66,7 +66,7 @@
             android:gravity="center_horizontal"
             android:id="@+id/tableLayout"
             android:layout_marginTop="15dp"
-            android:layout_below="@id/time_speedometer_text">
+            android:layout_below="@id/time_gauge_text">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -83,7 +83,7 @@
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="@dimen/trip_service_text_view_size"
-                    android:text="1100"
+                    android:text="@string/no_data"
                     android:id="@+id/tripFrag_rpm"
                     android:paddingLeft="@dimen/trip_service_text_left_pad"
                     android:textSize="@dimen/default_text_size" />
@@ -105,30 +105,8 @@
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="@dimen/trip_service_text_view_size"
-                    android:text="170 F"
-                    android:id="@+id/end_city"
-                    android:paddingLeft="@dimen/trip_service_text_left_pad"
-                    android:textSize="@dimen/default_text_size" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingBottom="@dimen/trip_service_row_spacing">
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="@dimen/trip_service_text_view_size"
-                    android:text="@string/current_mpg"
-                    android:textSize="@dimen/default_text_size" />
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="@dimen/trip_service_text_view_size"
-                    android:text="8"
-                    android:id="@+id/distance"
+                    android:text="@string/no_data"
+                    android:id="@+id/tripFrag_engine_temp"
                     android:paddingLeft="@dimen/trip_service_text_left_pad"
                     android:textSize="@dimen/default_text_size" />
 
@@ -149,8 +127,8 @@
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="@dimen/trip_service_text_view_size"
-                    android:text="12"
-                    android:id="@+id/total_time"
+                    android:text="@string/no_data"
+                    android:id="@+id/tripFrag_MPG"
                     android:paddingLeft="@dimen/trip_service_text_left_pad"
                     android:textSize="@dimen/default_text_size" />
 
@@ -171,8 +149,8 @@
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="@dimen/trip_service_text_view_size"
-                    android:text="2.2 psi"
-                    android:id="@+id/stops"
+                    android:text="@string/no_data"
+                    android:id="@+id/tripFrag_oil_psi"
                     android:paddingLeft="@dimen/trip_service_text_left_pad"
                     android:textSize="@dimen/default_text_size" />
 
@@ -193,8 +171,8 @@
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="@dimen/trip_service_text_view_size"
-                    android:text="34 mi"
-                    android:id="@+id/mpg"
+                    android:text="@string/no_data"
+                    android:id="@+id/tripFrag_distance"
                     android:paddingLeft="@dimen/trip_service_text_left_pad"
                     android:textSize="@dimen/default_text_size" />
 
@@ -215,8 +193,8 @@
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="@dimen/trip_service_text_view_size"
-                    android:text="12243 mi"
-                    android:id="@+id/avg_speed"
+                    android:text="@string/no_data"
+                    android:id="@+id/tripFrag_odometer"
                     android:paddingLeft="@dimen/trip_service_text_left_pad"
                     android:textSize="@dimen/default_text_size" />
 
@@ -227,7 +205,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/end_trip"
-            android:id="@+id/end_btn"
+            android:id="@+id/tripFrag_endBtn"
             android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"

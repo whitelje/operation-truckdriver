@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="Indianapolis, IN"
-                android:id="@+id/end_city"
+                android:id="@+id/tripFrag_engine_temp"
                 android:paddingLeft="@dimen/trip_review_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="2:40.00"
-                android:id="@+id/total_time"
+                android:id="@+id/tripFrag_MPG"
                 android:paddingLeft="@dimen/trip_review_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="1"
-                android:id="@+id/stops"
+                android:id="@+id/tripFrag_oil_psi"
                 android:paddingLeft="@dimen/trip_review_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -152,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="3.5"
-                android:id="@+id/mpg"
+                android:id="@+id/tripFrag_distance"
                 android:paddingLeft="@dimen/trip_review_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -173,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/trip_review_text_view_size"
                 android:text="57 mph"
-                android:id="@+id/avg_speed"
+                android:id="@+id/tripFrag_odometer"
                 android:paddingLeft="@dimen/trip_review_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 

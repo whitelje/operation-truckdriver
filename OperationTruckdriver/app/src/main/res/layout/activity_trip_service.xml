@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/trip_service_text_view_size"
                 android:text="170 F"
-                android:id="@+id/end_city"
+                android:id="@+id/tripFrag_engine_temp"
                 android:paddingLeft="@dimen/trip_service_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -128,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/trip_service_text_view_size"
                 android:text="12"
-                android:id="@+id/total_time"
+                android:id="@+id/tripFrag_MPG"
                 android:paddingLeft="@dimen/trip_service_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -150,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/trip_service_text_view_size"
                 android:text="2.2 psi"
-                android:id="@+id/stops"
+                android:id="@+id/tripFrag_oil_psi"
                 android:paddingLeft="@dimen/trip_service_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -172,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/trip_service_text_view_size"
                 android:text="34 mi"
-                android:id="@+id/mpg"
+                android:id="@+id/tripFrag_distance"
                 android:paddingLeft="@dimen/trip_service_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -194,7 +194,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/trip_service_text_view_size"
                 android:text="12243 mi"
-                android:id="@+id/avg_speed"
+                android:id="@+id/tripFrag_odometer"
                 android:paddingLeft="@dimen/trip_service_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -205,7 +205,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/end_trip"
-        android:id="@+id/end_btn"
+        android:id="@+id/tripFrag_endBtn"
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="5dp"
