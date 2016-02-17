@@ -1,47 +1,52 @@
 package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 
-import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.Map;
 
 /**
  * Created by jakesorz on 2/15/16.
  */
-public class ReviewItem implements Parcelable {
-    private final String mName;
-    protected final String mDesc;
+public class ReviewItem implements Comparable<ReviewItem> {
+    private long date;
+    private Map<String, Boolean> points;
 
-    protected ReviewItem(Parcel in) {
-        mName = in.readString();
-        mDesc = in.readString();
-    }
+    @JsonIgnore
+    private String key;
+
 
     ReviewItem() {
-        mName = "yadda";
-        mDesc = "yadda";
 
     }
 
-    public static final Creator<ReviewItem> CREATOR = new Creator<ReviewItem>() {
-        @Override
-        public ReviewItem createFromParcel(Parcel in) {
-            return new ReviewItem(in);
-        }
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-        @Override
-        public ReviewItem[] newArray(int size) {
-            return new ReviewItem[size];
-        }
-    };
+    public long getDate() {
+        return date;
+    }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setDate(long date) {
+        this.date = date;
+    }
+
+    public Map<String, Boolean> getPoints() {
+        return points;
+    }
+
+    public void setPoints(Map<String, Boolean> points) {
+        this.points = points;
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mName);
-        dest.writeString(mDesc);
+    public int compareTo(ReviewItem another) {
+        return date < another.date ? -1 : date == another.date ? 0 : 1;
+    }
 
+    public String getKey() {
+        return key;
     }
 }

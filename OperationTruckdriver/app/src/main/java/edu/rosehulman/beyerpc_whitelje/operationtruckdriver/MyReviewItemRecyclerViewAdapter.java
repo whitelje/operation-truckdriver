@@ -1,14 +1,22 @@
 package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+
 import edu.rosehulman.beyerpc_whitelje.operationtruckdriver.ReviewFragment.OnListFragmentInteractionListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,12 +28,53 @@ public class MyReviewItemRecyclerViewAdapter extends RecyclerView.Adapter<MyRevi
 
     private final List<ReviewItem> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private final Firebase mFirebaseUsersRef;
+    private final String mUid;
+    java.text.DateFormat df;
 
     public MyReviewItemRecyclerViewAdapter(OnListFragmentInteractionListener listener) {
         //mValues = items;
         mValues = new ArrayList<>();
-        mValues.add(new ReviewItem());
         mListener = listener;
+        mUid = SharedPreferencesUtils.getCurrentUser((MainActivity) listener);
+        df = DateFormat.getMediumDateFormat((MainActivity) listener);
+        mFirebaseUsersRef = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_USERS + "/" + mUid);
+        mFirebaseUsersRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                add(dataSnapshot);
+
+            }
+
+            private void add(DataSnapshot dataSnapshot) {
+                ReviewItem reviewItem = dataSnapshot.getValue(ReviewItem.class);
+                reviewItem.setKey(dataSnapshot.getKey());
+                mValues.add(reviewItem);
+                Collections.sort(mValues);
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
     }
 
     @Override
@@ -38,7 +87,8 @@ public class MyReviewItemRecyclerViewAdapter extends RecyclerView.Adapter<MyRevi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mContentView.setText(holder.mItem.mDesc);
+        Date date = new Date(holder.mItem.getDate());
+        holder.mContentView.setText(df.format(date));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +96,7 @@ public class MyReviewItemRecyclerViewAdapter extends RecyclerView.Adapter<MyRevi
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListFragmentInteraction(holder.mItem.getKey());
                 }
             }
         });

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -65,6 +64,7 @@ public class MainActivity extends AppCompatActivity
         mBluetoothService = new BluetoothService(this, mHandler);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
+        Firebase.setAndroidContext(this);
         mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
         if (mFirebaseRef.getAuth() == null) {
             Intent intent = new Intent(this, LoginActivity.class);
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(ReviewItem item) {
+    public void onListFragmentInteraction(String item) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, TripReviewFragment.newInstance(item));
         ft.addToBackStack(null);
