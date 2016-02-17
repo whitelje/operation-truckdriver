@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.cardiomood.android.controls.gauge.SpeedometerGauge;
@@ -53,9 +54,10 @@ public class TripFragment extends Fragment implements
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    public static final int MAP_UPDATE_INTERVAL = 10000;
-    public static final int MAP_MIN_UPDATE_INTERVAL = 7500;
-    public static final int WRITE_INTERVAL = 30000;
+    public static final int MAP_UPDATE_INTERVAL = 5000;
+    public static final int MAP_MIN_UPDATE_INTERVAL = 2500;
+//    public static final int WRITE_INTERVAL = 30000;
+    public static final int WRITE_INTERVAL = 5000;
 
     private String mTripId;
     private OnFragmentInteractionListener mListener;
@@ -170,6 +172,14 @@ public class TripFragment extends Fragment implements
         AddSpeedometerWidgets(v);
         getTextViews(v);
 
+        Button end_btn = (Button) v.findViewById(R.id.tripFrag_endBtn);
+        end_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                end_trip();
+            }
+        });
+
         return v;
     }
 
@@ -256,13 +266,6 @@ public class TripFragment extends Fragment implements
     public void onStop() {
         mLocationClient.disconnect();
         super.onStop();
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -391,6 +394,10 @@ public class TripFragment extends Fragment implements
         }
     }
 
+    public void end_trip() {
+        mListener.onEndTripClicked();
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -403,6 +410,6 @@ public class TripFragment extends Fragment implements
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onEndTripClicked();
     }
 }

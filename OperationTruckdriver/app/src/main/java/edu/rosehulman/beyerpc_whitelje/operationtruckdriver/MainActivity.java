@@ -195,8 +195,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public void onEndTripClicked() {
+        onBackPressed();
     }
 
     class MyHandler extends Handler {
