@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+
 public class MainActivity extends AppCompatActivity
     implements TripReviewFragment.OnFragmentInteractionListener,
                 VehicleFragment.OnFragmentInteractionListener,
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity
 
 {
     BluetoothService mBluetoothService;
+    Firebase mFirebaseRef;
     private String mConnectedDeviceName;
     private VnaMessageHandler mVnaMessageHandler;
     private boolean blah = false;
@@ -62,7 +65,8 @@ public class MainActivity extends AppCompatActivity
         mBluetoothService = new BluetoothService(this, mHandler);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        if (!logged_in) {
+        mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
+        if (mFirebaseRef.getAuth() == null) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivityForResult(intent, LoginActivity.REQUEST_LOGIN);
         } else {
@@ -73,8 +77,6 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, new MainActivityFragment());
         ft.commit();
-//        ft.replace(R.id.container, new TripFragment());
-//        ft.commit();
     }
 
     private void setStatus(int resId) {

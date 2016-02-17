@@ -22,10 +22,15 @@ public class DataPoint implements Parcelable {
     double oilPressure;
     double distance;
     double odometer;
-    double trip_mpg;
+    double tripMpg;
     double engineTemp;
 
     int dtcCount;
+
+    // for Firebase
+    DataPoint() {
+
+    }
 
     protected DataPoint(Parcel in) {
         key = in.readString();
@@ -37,7 +42,7 @@ public class DataPoint implements Parcelable {
         oilPressure = in.readDouble();
         distance = in.readDouble();
         odometer = in.readDouble();
-        trip_mpg = in.readDouble();
+        tripMpg = in.readDouble();
         engineTemp = in.readDouble();
         dtcCount = in.readInt();
     }
@@ -118,12 +123,12 @@ public class DataPoint implements Parcelable {
         this.odometer = odometer;
     }
 
-    public double getTrip_mpg() {
-        return trip_mpg;
+    public double getTripMpg() {
+        return tripMpg;
     }
 
-    public void setTrip_mpg(double trip_mpg) {
-        this.trip_mpg = trip_mpg;
+    public void setTripMpg(double tripMpg) {
+        this.tripMpg = tripMpg;
     }
 
     public double getEngineTemp() {
@@ -158,7 +163,7 @@ public class DataPoint implements Parcelable {
         dest.writeDouble(oilPressure);
         dest.writeDouble(distance);
         dest.writeDouble(odometer);
-        dest.writeDouble(trip_mpg);
+        dest.writeDouble(tripMpg);
         dest.writeDouble(engineTemp);
         dest.writeInt(dtcCount);
     }
