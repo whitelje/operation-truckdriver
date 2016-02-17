@@ -2,6 +2,7 @@ package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import edu.rosehulman.beyerpc_whitelje.operationtruckdriver.ReviewFragment.OnListFragmentInteractionListener;
 
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link } and makes a call to the
@@ -39,34 +42,27 @@ public class MyReviewItemRecyclerViewAdapter extends RecyclerView.Adapter<MyRevi
         mUid = SharedPreferencesUtils.getCurrentUser((MainActivity) listener);
         df = DateFormat.getMediumDateFormat((MainActivity) listener);
         mFirebaseUsersRef = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_USERS + "/" + mUid);
-        mFirebaseUsersRef.addChildEventListener(new ChildEventListener() {
+        Firebase trips = mFirebaseUsersRef.child("trips");
+        trips.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                add(dataSnapshot);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Firebase trip = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_TRIPS + "/" + ds.getKey());
+                    trip.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Trip tripItem = dataSnapshot.getValue(Trip.class);
+                            tripItem.setKey(dataSnapshot.getKey());
+                            mValues.add(tripItem);
+                            notifyDataSetChanged();
+                        }
 
-            }
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
 
-            private void add(DataSnapshot dataSnapshot) {
-                Trip trip = dataSnapshot.getValue(Trip.class);
-                trip.setKey(dataSnapshot.getKey());
-                mValues.add(trip);
-                Collections.sort(mValues);
-                notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                        }
+                    });
+                }
             }
 
             @Override

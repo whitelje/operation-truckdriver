@@ -308,7 +308,7 @@ public class TripFragment extends Fragment implements
     public void updateLabel(int pgn, double value) {
         switch(pgn) {
             case 61444:
-                rpmView.setText(value + "");
+                //rpmView.setText(value + "");
                 break;
             case 65266:
                 // MPG
