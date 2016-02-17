@@ -32,8 +32,8 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/vehicle_status_text_view_size"
-                android:text="12000"
-                android:id="@+id/start_city"
+                android:text="@string/no_data"
+                android:id="@+id/vehicleFrag_odometer"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -54,8 +54,8 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/vehicle_status_text_view_size"
-                android:text="Volvo"
-                android:id="@+id/tripFrag_engine_temp"
+                android:text="@string/no_data"
+                android:id="@+id/vehicleFrag_make"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -76,8 +76,8 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/vehicle_status_text_view_size"
-                android:text="Max"
-                android:id="@+id/distance"
+                android:text="@string/no_data"
+                android:id="@+id/vehicleFrag_model"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -98,8 +98,8 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/vehicle_status_text_view_size"
-                android:text="16AI8739102AD"
-                android:id="@+id/tripFrag_MPG"
+                android:text="@string/no_data"
+                android:id="@+id/vehicleFrag_VIN"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -120,8 +120,8 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/vehicle_status_text_view_size"
-                android:text="Cummins"
-                android:id="@+id/tripFrag_oil_psi"
+                android:text="@string/no_data"
+                android:id="@+id/vehicleFrag_engine_make"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -142,8 +142,8 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/vehicle_status_text_view_size"
-                android:text="354"
-                android:id="@+id/tripFrag_distance"
+                android:text="@string/no_data"
+                android:id="@+id/vehicleFrag_engine_model"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -164,8 +164,8 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/vehicle_status_text_view_size"
-                android:text="25 hr"
-                android:id="@+id/tripFrag_odometer"
+                android:text="@string/no_data"
+                android:id="@+id/vehicleFrag_engine_hours"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -186,8 +186,8 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/vehicle_status_text_view_size"
-                android:text="130 C"
-                android:id="@+id/driver_name"
+                android:text="@string/no_data"
+                android:id="@+id/vehicleFrag_engine_temp"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -208,8 +208,8 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/vehicle_status_text_view_size"
-                android:text="74 F"
-                android:id="@+id/verified"
+                android:text="@string/no_data"
+                android:id="@+id/vehicleFrag_fuel_temp"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
@@ -230,8 +230,8 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/vehicle_status_text_view_size"
-                android:text="2.2 psi"
-                android:id="@+id/oil_pressure"
+                android:text="@string/no_data"
+                android:id="@+id/vehicleFrag_oil_psi"
                 android:paddingLeft="@dimen/vehicle_status_text_left_pad"
                 android:textSize="@dimen/default_text_size" />
 
