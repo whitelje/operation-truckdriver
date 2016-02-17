@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * Created by jakesorz on 2/16/16.
  */
-public class DataPoint implements Parcelable {
+public class DataPoint implements Parcelable, Comparable<DataPoint> {
     @JsonIgnore
     String key;
 
@@ -170,5 +170,10 @@ public class DataPoint implements Parcelable {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    @Override
+    public int compareTo(DataPoint another) {
+        return time < another.time ? -1 : time == another.time ? 0 : 1;
     }
 }

@@ -3,10 +3,28 @@ package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.telecom.Call;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 
 /**
@@ -28,6 +46,7 @@ public class TripReviewFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private List<DataPoint> mList;
 
     public TripReviewFragment() {
         // Required empty public constructor
@@ -52,7 +71,7 @@ public class TripReviewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam1 = getArguments().getString("Trip");
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -69,6 +88,12 @@ public class TripReviewFragment extends Fragment {
                 onCancelButtonClicked();
             }
         });
+
+        mList = new ArrayList<>();
+
+        Firebase mFirebaseTripRef = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_TRIPS + "/" + mParam1);
+        Firebase something = mFirebaseTripRef.child("points");
+        something.addListenerForSingleValueEvent(new DataPointListener());
         return view;
     }
 
@@ -108,5 +133,54 @@ public class TripReviewFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onCancelButtonClicked();
+    }
+
+    private class DataPointListener implements ValueEventListener {
+        FutureTask<String> ft = null;
+        ExecutorService exService = Executors.newSingleThreadExecutor();
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                Firebase fb = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_POINTS + "/" + ds.getKey());
+                fb.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        DataPoint dp = dataSnapshot.getValue(DataPoint.class);
+                        mList.add(dp);
+                        Collections.sort(mList);
+                        if(ft != null) {
+                            ft.cancel(true);
+                        }
+                        UpdateUI call = new UpdateUI();
+                        ft = new FutureTask<>(call);
+                        exService.execute(ft);
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+            }
+        }
+
+        @Override
+        public void onCancelled(FirebaseError firebaseError) {
+
+        }
+    }
+
+    private class UpdateUI implements Callable<String> {
+
+        @Override
+        public String call() throws Exception {
+            Thread.sleep(1000);
+            updateUI();
+            return null;
+        }
+    }
+
+    private void updateUI() {
+        Log.d(Constants.TAG, mList.size() + "");
     }
 }

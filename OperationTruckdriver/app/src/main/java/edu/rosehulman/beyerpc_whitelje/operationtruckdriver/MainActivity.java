@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements TripReviewFragment.OnFragmentInteractionListener,
@@ -50,6 +52,8 @@ public class MainActivity extends AppCompatActivity
                 break;
             case LoginActivity.REQUEST_LOGIN:
                 logged_in = true;
+                Firebase userFirebase = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_USERS + "/" + SharedPreferencesUtils.getCurrentUser(this));
+                userFirebase.child("name").setValue("Payden Beyer");
 //                if(mBluetoothService != null &&
 //                        mBluetoothService.getState() == BluetoothService.STATE_NONE) {
 //                    Intent intent = new Intent(this, DeviceListActivity.class);
@@ -73,11 +77,14 @@ public class MainActivity extends AppCompatActivity
         //setSupportActionBar(toolbar);
         Firebase.setAndroidContext(this);
         mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
+
         if (mFirebaseRef.getAuth() == null) {
             GoToLoginActivity();
         } else {
 //            Intent intent = new Intent(this, DeviceListActivity.class);
 //            startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
+            Firebase userFirebase = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_USERS + "/" + SharedPreferencesUtils.getCurrentUser(this));
+            userFirebase.child("name").setValue("Payden Beyer");
         }
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
