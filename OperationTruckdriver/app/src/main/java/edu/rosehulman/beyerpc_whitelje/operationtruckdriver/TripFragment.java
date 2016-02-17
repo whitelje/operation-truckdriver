@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.cardiomood.android.controls.gauge.SpeedometerGauge;
 import com.firebase.client.Firebase;
@@ -302,6 +303,29 @@ public class TripFragment extends Fragment implements
     @Override
         public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.i("APICLIENT", "GoogleApiClient connection has failed");
+    }
+
+    public void updateLabel(int pgn, double value) {
+        switch(pgn) {
+            case 61444:
+                rpmView.setText(value + "");
+                break;
+            case 65266:
+                // MPG
+                break;
+            case 65262:
+                // Engine Temp
+                break;
+            case 65263:
+                // Oil Pressure
+                break;
+            case 65261:
+                // Speed
+                break;
+            case 65217:
+                // Odometer
+                break;
+        }
     }
 
     /**

@@ -236,27 +236,8 @@ public class MainActivity extends AppCompatActivity
                         for(Fragment frag : frags) {
                             if(frag instanceof TripFragment && frag.isVisible()) {
                                 TripFragment tf = (TripFragment) frag;
-                                switch(msg.getData().getInt(Constants.J1939_PGN)) {
-                                    case 61444:
-                                        ((TextView)findViewById(R.id.tripFrag_rpm))
-                                                .setText(msg.getData().getDouble(Constants.J1939_VALUE) + "");
-                                        break;
-                                    case 65266:
-                                        // MPG
-                                        break;
-                                    case 65262:
-                                        // Engine Temp
-                                        break;
-                                    case 65263:
-                                        // Oil Pressure
-                                        break;
-                                    case 65261:
-                                        // Speed
-                                        break;
-                                    case 65217:
-                                        // Odometer
-                                        break;
-                                }
+                                tf.updateLabel(msg.getData().getInt(Constants.J1939_PGN),
+                                        msg.getData().getDouble(Constants.J1939_VALUE));
                             }
                         }
                     }
