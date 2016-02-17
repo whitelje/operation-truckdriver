@@ -158,7 +158,6 @@ public class TripFragment extends Fragment implements
                     googleMap.getUiSettings().setScrollGesturesEnabled(false);
                     googleMap.getUiSettings().setZoomGesturesEnabled(false);
                     mGmap = googleMap;
-//                    drawLines();
                 }
             }
         });
