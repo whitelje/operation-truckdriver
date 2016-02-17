@@ -376,16 +376,27 @@ public class VnaMessageHandler {
             case VNA_MSG_RX_I15765: {
                 // if using OBD send message
                 // should not receive if not using
-                msg = mHandler.obtainMessage(Constants.MESSAGE_RX_OBD);
+                msg = mHandler.obtainMessage(Constants.MESSAGE_RX_J1939);
                 bundle = new Bundle();
                 int pid = mBuffer[9];
-                bundle.putInt(Constants.OBD_PID, pid);
-                value = ((uByte(mBuffer[10]) * 256) + uByte(mBuffer[11])) / 4;
-                bundle.putDouble(Constants.OBD_DATA, value);
+                switch(pid) {
+                    case 0x0C:
+                        bundle.putInt(Constants.J1939_PGN, 61444);
+                        value = ((uByte(mBuffer[10]) * 256) + uByte(mBuffer[11])) / 4;
+                        bundle.putDouble(Constants.J1939_VALUE, value);
+                        break;
+                    case 0x0D:
+                        value = mBuffer[10] * KM_TO_MI;
+                        bundle.putInt(Constants.J1939_PGN, 61444);
+                        bundle.putDouble(Constants.J1939_VALUE, value);
+                        break;
+                }
                 msg.setData(bundle);
                 mHandler.sendMessage(msg);
                 break;
             }
+            case VNA_MSG_ACK:
+                Log.d(Constants.TAG, "ACK!");
         }
 
     }

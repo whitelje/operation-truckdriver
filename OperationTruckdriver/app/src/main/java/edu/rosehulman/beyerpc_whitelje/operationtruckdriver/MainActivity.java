@@ -258,7 +258,15 @@ public class MainActivity extends AppCompatActivity
                         buf[3] = 0x40;
                         buf[4] = (byte) 0;
                         buf[5] = 0x0C;
-                        buf[6] = 0x74;
+                        buf[6] = 0x70;
+                        mBluetoothService.write(buf);
+                        buf[0] = (byte) 0xC0;
+                        buf[1] = (byte) 0;
+                        buf[2] = 4;
+                        buf[3] = 0x40;
+                        buf[4] = (byte) 0;
+                        buf[5] = 0x0D;
+                        buf[6] = 0x6F;
                         mBluetoothService.write(buf);
                         blah = true;
                     }
