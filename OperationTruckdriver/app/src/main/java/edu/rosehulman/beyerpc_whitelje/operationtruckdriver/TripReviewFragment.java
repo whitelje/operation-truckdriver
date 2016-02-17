@@ -43,7 +43,7 @@ public class TripReviewFragment extends Fragment {
     public static TripReviewFragment newInstance(String tripId) {
         TripReviewFragment fragment = new TripReviewFragment();
         Bundle args = new Bundle();
-        args.putString("ReviewItem", tripId);
+        args.putString("Trip", tripId);
         fragment.setArguments(args);
         return fragment;
     }

@@ -1,7 +1,5 @@
 package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 
-import android.os.Parcelable;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Map;
@@ -9,7 +7,7 @@ import java.util.Map;
 /**
  * Created by jakesorz on 2/15/16.
  */
-public class ReviewItem implements Comparable<ReviewItem> {
+public class Trip implements Comparable<Trip> {
     private long date;
     private Map<String, Boolean> points;
 
@@ -17,7 +15,7 @@ public class ReviewItem implements Comparable<ReviewItem> {
     private String key;
 
 
-    ReviewItem() {
+    Trip() {
 
     }
 
@@ -42,7 +40,7 @@ public class ReviewItem implements Comparable<ReviewItem> {
     }
 
     @Override
-    public int compareTo(ReviewItem another) {
+    public int compareTo(Trip another) {
         return date < another.date ? -1 : date == another.date ? 0 : 1;
     }
 

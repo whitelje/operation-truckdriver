@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class MyReviewItemRecyclerViewAdapter extends RecyclerView.Adapter<MyReviewItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<ReviewItem> mValues;
+    private final List<Trip> mValues;
     private final OnListFragmentInteractionListener mListener;
     private final Firebase mFirebaseUsersRef;
     private final String mUid;
@@ -47,9 +47,9 @@ public class MyReviewItemRecyclerViewAdapter extends RecyclerView.Adapter<MyRevi
             }
 
             private void add(DataSnapshot dataSnapshot) {
-                ReviewItem reviewItem = dataSnapshot.getValue(ReviewItem.class);
-                reviewItem.setKey(dataSnapshot.getKey());
-                mValues.add(reviewItem);
+                Trip trip = dataSnapshot.getValue(Trip.class);
+                trip.setKey(dataSnapshot.getKey());
+                mValues.add(trip);
                 Collections.sort(mValues);
                 notifyDataSetChanged();
             }
@@ -111,7 +111,7 @@ public class MyReviewItemRecyclerViewAdapter extends RecyclerView.Adapter<MyRevi
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public ReviewItem mItem;
+        public Trip mItem;
 
         public ViewHolder(View view) {
             super(view);

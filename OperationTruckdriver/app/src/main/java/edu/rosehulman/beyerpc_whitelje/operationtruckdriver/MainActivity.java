@@ -3,6 +3,7 @@ package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,7 +17,8 @@ import com.firebase.client.Firebase;
 public class MainActivity extends AppCompatActivity
     implements TripReviewFragment.OnFragmentInteractionListener,
                 VehicleFragment.OnFragmentInteractionListener,
-        ReviewFragment.OnListFragmentInteractionListener
+        ReviewFragment.OnListFragmentInteractionListener,
+        TripFragment.OnFragmentInteractionListener
 
 {
     BluetoothService mBluetoothService;
@@ -140,6 +142,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onCloseVehicleFragmentClicked() {
         onBackPressed();
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     class MyHandler extends Handler {

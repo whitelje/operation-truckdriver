@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cardiomood.android.controls.gauge.SpeedometerGauge;
+import com.firebase.client.Firebase;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -30,6 +31,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -52,13 +57,16 @@ public class TripFragment extends Fragment implements
     public static final int WRITE_INTERVAL = 30000;
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private String mTripId;
 
     private OnFragmentInteractionListener mListener;
     private GoogleMap mGmap;
     private LocationRequest mLocRequest;
     private GoogleApiClient mLocationClient;
     private long mLastWrite;
+    private Firebase mTripFirebaseRef;
+    private Firebase mTripPointFirebaseRef;
+
 
     public TripFragment() {
         // Required empty public constructor
@@ -75,8 +83,8 @@ public class TripFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
         }
+
     }
 
     private Location getMyLocation() {
@@ -106,6 +114,11 @@ public class TripFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+        setupFirebase();
+
+
         mLocationClient = new GoogleApiClient.Builder(getContext())
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
@@ -145,6 +158,24 @@ public class TripFragment extends Fragment implements
         AddSpeedometerWidgets(v);
 
         return v;
+    }
+
+    private void setupFirebase() {
+        Firebase tripRef = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_TRIPS);
+        tripRef = tripRef.push();
+        mTripId = tripRef.getKey();
+        Trip t = new Trip();
+        t.setDate(System.currentTimeMillis());
+        tripRef.setValue(t);
+
+        String userId = SharedPreferencesUtils.getCurrentUser((MainActivity) mListener);
+        Firebase UserFirebaseRef = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_USERS + "/" + userId);
+        Map<String, Object> map = new HashMap<>();
+        map.put(mTripId, true);
+        UserFirebaseRef.child("trips").updateChildren(map);
+
+        mTripFirebaseRef = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_TRIPS + "/" + mTripId);
+        mTripPointFirebaseRef = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_POINTS);
     }
 
     private void AddSpeedometerWidgets(View v) {
@@ -210,6 +241,12 @@ public class TripFragment extends Fragment implements
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnListFragmentInteractionListener");
+        }
     }
 
     @Override
