@@ -2,46 +2,56 @@
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <com.cardiomood.android.controls.gauge.SpeedometerGauge
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
-            android:id="@+id/speedometer_placeholder"
+            android:id="@+id/speedometer"
+            android:layout_marginTop="25dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/speedometer_placeholder"/>
+            />
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
-            android:id="@+id/time_speedometer_placeholder"
-            android:layout_below="@+id/speedometer_placeholder"
+            android:id="@+id/speedometer_text"
+            android:textSize="@dimen/default_text_size"
+            android:gravity="center"
+            android:layout_below="@+id/speedometer"
+            android:text="45 MPH"/>
+
+        <com.cardiomood.android.controls.gauge.SpeedometerGauge
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/time_speedometer"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/speedometer_text"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/time_speedometer_placeholder"/>
+            />
 
-        <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/trip_map_container"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:src="@drawable/map_placeholder"-->
-        <!--android:layout_toRightOf="@+id/speedometer_placeholder"-->
-        <!--android:layout_toEndOf="@+id/speedometer_placeholder"-->
-        <!--android:layout_alignBottom="@+id/time_speedometer_placeholder" />-->
+        <TextView
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/time_speedometer_text"
+            android:textSize="@dimen/default_text_size"
+            android:gravity="center"
+            android:layout_below="@+id/time_speedometer"
+            android:text="5.75 Hours"/>
 
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/trip_map_container"
+            android:layout_marginTop="15dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_toRightOf="@id/speedometer_placeholder"
-            android:layout_toEndOf="@id/speedometer_placeholder"
-            android:layout_alignBottom="@id/time_speedometer_placeholder"
+            android:layout_toRightOf="@id/speedometer"
+            android:layout_toEndOf="@id/speedometer"
+            android:layout_alignBottom="@id/time_speedometer_text"
             />
 
         <TableLayout
@@ -55,7 +65,8 @@
             android:paddingEnd="10dp"
             android:gravity="center_horizontal"
             android:id="@+id/tableLayout"
-            android:layout_below="@id/time_speedometer_placeholder">
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/time_speedometer_text">
 
             <TableRow
                 android:layout_width="match_parent"

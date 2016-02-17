@@ -3,6 +3,7 @@ package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cardiomood.android.controls.gauge.SpeedometerGauge;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -139,7 +141,51 @@ public class TripFragment extends Fragment implements
         ft.replace(R.id.trip_map_container, mMap);
         ft.commit();
 
-        return inflater.inflate(R.layout.fragment_trip, container, false);
+        View v = inflater.inflate(R.layout.fragment_trip, container, false);
+        AddSpeedometerWidgets(v);
+
+        return v;
+    }
+
+    private void AddSpeedometerWidgets(View v) {
+        SpeedometerGauge speedometer = (SpeedometerGauge) v.findViewById(R.id.speedometer);
+        speedometer.setLabelConverter(new SpeedometerGauge.LabelConverter() {
+            @Override
+            public String getLabelFor(double progress, double maxProgress) {
+                return String.valueOf((int) Math.round(progress));
+            }
+        });
+
+        speedometer.setMaxSpeed(120);
+        speedometer.setMajorTickStep(20);
+        speedometer.setMinorTicks(1);
+
+        // Configure value range colors
+        speedometer.addColoredRange(15, 50, Color.GREEN);
+        speedometer.addColoredRange(50, 75, Color.YELLOW);
+        speedometer.addColoredRange(75, 120, Color.RED);
+
+        speedometer.setSpeed(45, true);
+
+
+        SpeedometerGauge timeGauge = (SpeedometerGauge) v.findViewById(R.id.time_speedometer);
+        timeGauge.setLabelConverter(new SpeedometerGauge.LabelConverter() {
+            @Override
+            public String getLabelFor(double progress, double maxProgress) {
+                return String.valueOf((int) Math.round(progress));
+            }
+        });
+
+        timeGauge.setMaxSpeed(8);
+        timeGauge.setMajorTickStep(1);
+        timeGauge.setMinorTicks(3);
+
+        // Configure value range colors
+        timeGauge.addColoredRange(0, 5, Color.GREEN);
+        timeGauge.addColoredRange(5, 7, Color.YELLOW);
+        timeGauge.addColoredRange(7, 8, Color.RED);
+
+        timeGauge.setSpeed(5.743, true);
     }
 
     @Override
