@@ -18,6 +18,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+    }
+
 }
 
 dependencies {
@@ -34,4 +41,5 @@ dependencies {
     compile 'com.google.maps.android:android-maps-utils:0.3.4'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.cardiomood.android:android-widgets:0.1.1'
+    compile 'com.firebase:firebase-client-android:2.3.1+'
 }
