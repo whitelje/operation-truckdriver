@@ -12,7 +12,9 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class MyReviewItemRecyclerViewAdapter extends RecyclerView.Adapter<MyRevi
         mValues = new ArrayList<>();
         mListener = listener;
         mUid = SharedPreferencesUtils.getCurrentUser((MainActivity) listener);
-        df = DateFormat.getDateFormat((MainActivity) listener);
+        df = java.text.DateFormat.getDateTimeInstance();
         mFirebaseUsersRef = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_USERS + "/" + mUid);
         Firebase trips = mFirebaseUsersRef.child("trips");
         trips.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -50,6 +52,7 @@ public class MyReviewItemRecyclerViewAdapter extends RecyclerView.Adapter<MyRevi
                             Trip tripItem = dataSnapshot.getValue(Trip.class);
                             tripItem.setKey(dataSnapshot.getKey());
                             mValues.add(tripItem);
+                            Collections.sort(mValues);
                             notifyDataSetChanged();
                         }
 
