@@ -3,7 +3,6 @@ package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.FragmentTransaction;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -20,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,8 +30,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.maps.MapFragment;
+import com.firebase.client.AuthData;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,12 +73,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     private TextView mCompanyNameView;
     private ImageView mCompanyImageView;
+    private Firebase mFirebaseRef;
+    private String mUid;
 //    private MapFragment mf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
 //        setContentView(R.layout.trip_review_view);
 //        mf = MapFragment.newInstance();
 //        FragmentTransaction fragmentTransaction =
@@ -205,8 +212,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            //mAuthTask = new UserLoginTask(email, password);
+
+            mFirebaseRef.authWithPassword(email, password, new EmailPasswordAuthResultHandler());
+            //mAuthTask.execute((Void) null);
         }
     }
 
@@ -363,6 +372,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onCancelled() {
             mAuthTask = null;
+            showProgress(false);
+        }
+    }
+
+    class EmailPasswordAuthResultHandler implements Firebase.AuthResultHandler {
+        @Override
+        public void onAuthenticated(AuthData authData) {
+            Log.d(Constants.TAG, "User is authenticated");
+            mUid = authData.getUid();
+            SharedPreferencesUtils.setCurrentUser(getApplicationContext(), mUid);
+            finish();
+        }
+
+        @Override
+        public void onAuthenticationError(FirebaseError firebaseError) {
+            Toast.makeText(getApplicationContext(), "User failed authentication: " + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
             showProgress(false);
         }
     }

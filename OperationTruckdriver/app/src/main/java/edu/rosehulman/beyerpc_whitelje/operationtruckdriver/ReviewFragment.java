@@ -99,6 +99,6 @@ public class ReviewFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(ReviewItem item);
+        void onListFragmentInteraction(String item);
     }
 }

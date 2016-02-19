@@ -1,15 +1,24 @@
 package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import edu.rosehulman.beyerpc_whitelje.operationtruckdriver.ReviewFragment.OnListFragmentInteractionListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+
+import edu.rosehulman.beyerpc_whitelje.operationtruckdriver.ReviewFragment.OnListFragmentInteractionListener;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link } and makes a call to the
@@ -18,14 +27,49 @@ import java.util.List;
  */
 public class MyReviewItemRecyclerViewAdapter extends RecyclerView.Adapter<MyReviewItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<ReviewItem> mValues;
+    private final List<Trip> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private final Firebase mFirebaseUsersRef;
+    private final String mUid;
+    java.text.DateFormat df;
 
     public MyReviewItemRecyclerViewAdapter(OnListFragmentInteractionListener listener) {
         //mValues = items;
         mValues = new ArrayList<>();
-        mValues.add(new ReviewItem());
         mListener = listener;
+        mUid = SharedPreferencesUtils.getCurrentUser((MainActivity) listener);
+        df = java.text.DateFormat.getDateTimeInstance();
+        mFirebaseUsersRef = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_USERS + "/" + mUid);
+        Firebase trips = mFirebaseUsersRef.child("trips");
+        trips.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Firebase trip = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_TRIPS + "/" + ds.getKey());
+                    trip.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Trip tripItem = dataSnapshot.getValue(Trip.class);
+                            tripItem.setKey(dataSnapshot.getKey());
+                            mValues.add(tripItem);
+                            Collections.sort(mValues);
+                            notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
     }
 
     @Override
@@ -38,7 +82,8 @@ public class MyReviewItemRecyclerViewAdapter extends RecyclerView.Adapter<MyRevi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mContentView.setText(holder.mItem.mDesc);
+        Date date = new Date(holder.mItem.getDate());
+        holder.mContentView.setText(df.format(date));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +91,7 @@ public class MyReviewItemRecyclerViewAdapter extends RecyclerView.Adapter<MyRevi
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListFragmentInteraction(holder.mItem.getKey());
                 }
             }
         });
@@ -61,7 +106,7 @@ public class MyReviewItemRecyclerViewAdapter extends RecyclerView.Adapter<MyRevi
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public ReviewItem mItem;
+        public Trip mItem;
 
         public ViewHolder(View view) {
             super(view);

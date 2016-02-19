@@ -3,22 +3,33 @@ package edu.rosehulman.beyerpc_whitelje.operationtruckdriver;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity
-    implements TripReviewFragment.OnFragmentInteractionListener,
-                VehicleFragment.OnFragmentInteractionListener,
-        ReviewFragment.OnListFragmentInteractionListener
+        implements TripReviewFragment.OnFragmentInteractionListener,
+        VehicleFragment.OnFragmentInteractionListener,
+        ReviewFragment.OnListFragmentInteractionListener,
+        TripFragment.OnFragmentInteractionListener
 
 {
     BluetoothService mBluetoothService;
+    Firebase mFirebaseRef;
     private String mConnectedDeviceName;
     private VnaMessageHandler mVnaMessageHandler;
     private boolean blah = false;
@@ -41,11 +52,13 @@ public class MainActivity extends AppCompatActivity
                 break;
             case LoginActivity.REQUEST_LOGIN:
                 logged_in = true;
-//                if(mBluetoothService != null &&
-//                        mBluetoothService.getState() == BluetoothService.STATE_NONE) {
-//                    Intent intent = new Intent(this, DeviceListActivity.class);
-//                    startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
-//                }
+                Firebase userFirebase = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_USERS + "/" + SharedPreferencesUtils.getCurrentUser(this));
+                userFirebase.child("name").setValue("Payden Beyer");
+                if(mBluetoothService != null &&
+                        mBluetoothService.getState() == BluetoothService.STATE_NONE) {
+                    Intent intent = new Intent(this, DeviceListActivity.class);
+                    startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
+                }
                 break;
         }
     }
@@ -62,19 +75,21 @@ public class MainActivity extends AppCompatActivity
         mBluetoothService = new BluetoothService(this, mHandler);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        if (!logged_in) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivityForResult(intent, LoginActivity.REQUEST_LOGIN);
+        Firebase.setAndroidContext(this);
+        mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
+
+        if (mFirebaseRef.getAuth() == null) {
+            GoToLoginActivity();
         } else {
-//            Intent intent = new Intent(this, DeviceListActivity.class);
-//            startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
+            Intent intent = new Intent(this, DeviceListActivity.class);
+            startActivityForResult(intent, REQUEST_CONNECT_DEVICE_INSECURE);
+            Firebase userFirebase = new Firebase(Constants.FIREBASE_URL + Constants.FIREBASE_USERS + "/" + SharedPreferencesUtils.getCurrentUser(this));
+            userFirebase.child("name").setValue("Payden Beyer");
         }
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, new MainActivityFragment());
         ft.commit();
-//        ft.replace(R.id.container, new TripFragment());
-//        ft.commit();
     }
 
     private void setStatus(int resId) {
@@ -118,6 +133,46 @@ public class MainActivity extends AppCompatActivity
         ft.replace(R.id.container, VehicleFragment.newInstance());
         ft.addToBackStack(null);
         ft.commit();
+        sendRequests();
+    }
+
+    public static final long[] INIT_J1939_FILTERS = new long[]{61444, 64997, 65217, 65262, 65263, 65265, 65266, 65270, 65226};
+    public static final long[] INIT_J1939_REQUESTS = new long[]{65209, 65214, 65244, 65253, 65255, 65257, 65259, 65260, 65261,
+            65227};
+
+    private void sendRequests() {
+        for (long pgn : INIT_J1939_REQUESTS) {
+            sendCommand(VnaMessageHandler.requestJ1939((byte) 0, pgn));
+            try {
+                Thread.sleep(25);
+            } catch (InterruptedException e) {
+                Log.e(Constants.TAG, "Sleep interruption");
+            }
+        }
+    }
+
+    private void initJ1939() {
+        for (long pgn : INIT_J1939_FILTERS) {
+            sendCommand(VnaMessageHandler.filterAddDelJ1939((byte) 0, pgn));
+        }
+        for (long pgn : INIT_J1939_REQUESTS) {
+            sendCommand(VnaMessageHandler.filterAddDelJ1939((byte) 0, pgn));
+        }
+    }
+
+
+    private void sendCommand(TxStruct command) {
+        mBluetoothService.write(command.getBuf(), 0, command.getLen());
+    }
+
+    public void logout(View view) {
+        mFirebaseRef.unauth();
+        GoToLoginActivity();
+    }
+
+    public void GoToLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivityForResult(intent, LoginActivity.REQUEST_LOGIN);
     }
 
     // TripReviewFragment.OnInteractionListener
@@ -127,16 +182,20 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(ReviewItem item) {
+    public void onListFragmentInteraction(String item) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, TripReviewFragment.newInstance(item));
         ft.addToBackStack(null);
         ft.commit();
-
     }
 
     @Override
     public void onCloseVehicleFragmentClicked() {
+        onBackPressed();
+    }
+
+    @Override
+    public void onEndTripClicked() {
         onBackPressed();
     }
 
@@ -155,6 +214,7 @@ public class MainActivity extends AppCompatActivity
                     switch (msg.arg1) {
                         case BluetoothService.STATE_CONNECTED:
                             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
+                            //initJ1939();
                             break;
                         case BluetoothService.STATE_CONNECTING:
                             setStatus(R.string.title_connecting);
@@ -190,7 +250,7 @@ public class MainActivity extends AppCompatActivity
                     }
                     break;
                 case Constants.MESSAGE_STATS_OBD:
-                    if(!blah) {
+                    if (true) {
                         byte[] buf = new byte[7];
                         buf[0] = (byte) 0xC0;
                         buf[1] = (byte) 0;
@@ -198,7 +258,15 @@ public class MainActivity extends AppCompatActivity
                         buf[3] = 0x40;
                         buf[4] = (byte) 0;
                         buf[5] = 0x0C;
-                        buf[6] = 0x74;
+                        buf[6] = 0x70;
+                        mBluetoothService.write(buf);
+                        buf[0] = (byte) 0xC0;
+                        buf[1] = (byte) 0;
+                        buf[2] = 4;
+                        buf[3] = 0x40;
+                        buf[4] = (byte) 0;
+                        buf[5] = 0x0D;
+                        buf[6] = 0x6F;
                         mBluetoothService.write(buf);
                         blah = true;
                     }
@@ -207,6 +275,33 @@ public class MainActivity extends AppCompatActivity
                     // write to firebase
                     // write to trip view
                     break;
+                case Constants.MESSAGE_RX_J1939:
+                    List<Fragment> frags = getSupportFragmentManager().getFragments();
+                    if (frags.isEmpty()) {
+                        // run for the hills
+                    } else {
+                        for (Fragment frag : frags) {
+                            if (frag instanceof TripFragment && frag.isVisible()) {
+                                TripFragment tf = (TripFragment) frag;
+                                tf.updateLabel(msg.getData().getInt(Constants.J1939_PGN),
+                                        msg.getData().getDouble(Constants.J1939_VALUE));
+                            } else if (frag instanceof VehicleFragment && frag.isVisible()) {
+                                VehicleFragment vf = (VehicleFragment) frag;
+                                int pgn = msg.getData().getInt(Constants.J1939_PGN);
+                                if (pgn == 65259) {
+                                    vf.updateLabel(pgn,
+                                            msg.getData().getString(Constants.J1939_MAKE),
+                                            msg.getData().getString(Constants.J1939_MODEL),
+                                            msg.getData().getString(Constants.J1939_SERIAL));
+                                } else if (pgn == 65260) {
+                                    vf.updateLabel(msg.getData().getString(Constants.J1939_VIN));
+                                } else {
+                                    vf.updateLabel(pgn,
+                                            msg.getData().getDouble(Constants.J1939_VALUE));
+                                }
+                            }
+                        }
+                    }
             }
         }
     }

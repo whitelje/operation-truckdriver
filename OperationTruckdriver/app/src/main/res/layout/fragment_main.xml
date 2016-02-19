@@ -116,6 +116,7 @@
         android:id="@+id/logout_button"
         android:textSize="@dimen/main_activity_btn_text_size"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/vehicle_button" />
+        android:layout_below="@+id/vehicle_button"
+        android:onClick="logout"/>
 
 </RelativeLayout>

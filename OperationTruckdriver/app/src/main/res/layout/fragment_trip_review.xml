@@ -1,36 +1,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<ImageView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:id="@+id/map_of_trip"-->
-    <!--android:src="@drawable/united_states_outline"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_alignParentStart="true"-->
-    <!--android:paddingTop="10dp"-->
-    <!--android:paddingBottom="10dp"/>-->
     <FrameLayout
-        android:id="@+id/map_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="190dp"
+        android:id="@+id/trip_review_map_container"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp">
-
-    </FrameLayout>
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"/>
 
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/map_fragment_container"
+        android:layout_below="@id/trip_review_map_container"
         android:paddingLeft="25dp">
 
         <TableRow
@@ -87,7 +74,7 @@
                 android:textSize="@dimen/default_text_size" />
 
             <TextView
-                android:id="@+id/distance"
+                android:id="@+id/tripReview_distance"
                 android:layout_width="@dimen/trip_review_text_view_size"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/trip_review_text_left_pad"
@@ -108,7 +95,7 @@
                 android:textSize="@dimen/default_text_size" />
 
             <TextView
-                android:id="@+id/total_time"
+                android:id="@+id/tripReview_time"
                 android:layout_width="@dimen/trip_review_text_view_size"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/trip_review_text_left_pad"
@@ -129,7 +116,7 @@
                 android:textSize="@dimen/default_text_size" />
 
             <TextView
-                android:id="@+id/stops"
+                android:id="@+id/tripReview_stops"
                 android:layout_width="@dimen/trip_review_text_view_size"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/trip_review_text_left_pad"
@@ -150,7 +137,7 @@
                 android:textSize="@dimen/default_text_size" />
 
             <TextView
-                android:id="@+id/mpg"
+                android:id="@+id/tripReview_mpg"
                 android:layout_width="@dimen/trip_review_text_view_size"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/trip_review_text_left_pad"
@@ -171,7 +158,7 @@
                 android:textSize="@dimen/default_text_size" />
 
             <TextView
-                android:id="@+id/avg_speed"
+                android:id="@+id/tripReview_speed"
                 android:layout_width="@dimen/trip_review_text_view_size"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/trip_review_text_left_pad"
